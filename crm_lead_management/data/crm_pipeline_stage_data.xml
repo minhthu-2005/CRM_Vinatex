@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="stage_new_lead" model="crm.stage">
+        <field name="name">New Lead</field>
+        <field name="sequence">1</field>
+        <field name="requirements">Lead mới phát sinh và cần được Sales follow-up.</field>
+    </record>
+
+    <record id="stage_qualified" model="crm.stage">
+        <field name="name">Qualified</field>
+        <field name="sequence">2</field>
+        <field name="requirements">Đã xác nhận khách hàng có nhu cầu thực tế.</field>
+    </record>
+
+    <record id="stage_proposal" model="crm.stage">
+        <field name="name">Proposal</field>
+        <field name="sequence">3</field>
+        <field name="requirements">Đã gửi báo giá hoặc đề xuất.</field>
+    </record>
+
+    <record id="stage_negotiation" model="crm.stage">
+        <field name="name">Negotiation</field>
+        <field name="sequence">4</field>
+        <field name="requirements">Đang thương lượng điều khoản với khách hàng.</field>
+    </record>
+
+    <record id="stage_won" model="crm.stage">
+        <field name="name">Won</field>
+        <field name="sequence">5</field>
+        <field name="is_won" eval="True"/>
+        <field name="fold" eval="True"/>
+        <field name="requirements">Cơ hội đã chốt thành công.</field>
+    </record>
+
+    <record id="stage_lost" model="crm.stage">
+        <field name="name">Lost</field>
+        <field name="sequence">6</field>
+        <field name="fold" eval="True"/>
+        <field name="requirements">Không thành công hoặc khách hàng từ chối.</field>
+    </record>
+
+    <record id="stage_dormant" model="crm.stage">
+        <field name="name">Dormant</field>
+        <field name="sequence">7</field>
+        <field name="fold" eval="True"/>
+        <field name="requirements">Khách hàng không phản hồi trong thời gian dài.</field>
+    </record>
+</odoo>
