@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_campaign_root" name="Quản lý chiến dịch" sequence="20"/>
+    <menuitem id="menu_mail_campaign" name="Chiến dịch email" parent="menu_campaign_root" sequence="1"/>
+    <menuitem id="menu_mail_template" name="Mẫu email" parent="menu_campaign_root" sequence="2"/>
+
+    <record id="action_mail_campaign" model="ir.actions.act_window">
+        <field name="name">Chiến dịch email</field>
+        <field name="res_model">custom.mail.campaign</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="menu_mail_campaign_action" name="Danh sách chiến dịch" parent="menu_mail_campaign" action="action_mail_campaign" sequence="1"/>
+
+    <record id="action_mail_template" model="ir.actions.act_window">
+        <field name="name">Mẫu email cho chiến dịch</field>
+        <field name="res_model">mail.template</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_mail_template_list_campaign"/>
+        <field name="search_view_id" ref="view_mail_template_search_campaign"/>
+        <field name="domain">['|', ('is_campaign_template', '=', True), ('campaign_template_type', '!=', False)]</field>
+        <field name="context">{'default_is_campaign_template': True, 'default_model': 'res.partner'}</field>
+    </record>
+
+    <record id="action_mail_template_tree" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_mail_template_list_campaign"/>
+        <field name="act_window_id" ref="action_mail_template"/>
+    </record>
+
+    <record id="action_mail_template_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_mail_template_form_campaign"/>
+        <field name="act_window_id" ref="action_mail_template"/>
+    </record>
+
+    <menuitem id="menu_mail_template_action" name="Danh sách mẫu email" parent="menu_mail_template" action="action_mail_template" sequence="1"/>
+</odoo>
