@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ir_cron_automated_email_workflow" model="ir.cron">
+        <field name="name">Tự động gửi email chăm sóc lại</field>
+        <field name="model_id" ref="model_custom_mail_campaign"/>
+        <field name="state">code</field>
+        <field name="code">model.automated_email_workflow()</field>
+        <field name="interval_type">minutes</field>
+        <field name="interval_number">10</field>
+        <field name="active" eval="True"/>
+    </record>
+    <record id="ir_cron_dormant_remarketing" model="ir.cron">
+        <field name="name">Tạo campaign remarketing khách hàng lâu chưa tương tác</field>
+        <field name="model_id" ref="model_custom_mail_campaign"/>
+        <field name="state">code</field>
+        <field name="code">model.send_dormant_remarketing()</field>
+        <field name="interval_type">hours</field>
+        <field name="interval_number">1</field>
+        <field name="active" eval="True"/>
+    </record>
+    <record id="ir_cron_send_scheduled_campaigns" model="ir.cron">
+        <field name="name">Tự động gửi campaign đã lên lịch</field>
+        <field name="model_id" ref="model_custom_mail_campaign"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_send_scheduled_campaigns()</field>
+        <field name="interval_type">minutes</field>
+        <field name="interval_number">1</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>
