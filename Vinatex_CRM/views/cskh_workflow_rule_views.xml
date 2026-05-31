@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- CUSTOM THÊM MỚI -->
+    <!-- List view cấu hình quy tắc quy trình CSKH -->
+    <record id="view_crm_cskh_workflow_rule_list" model="ir.ui.view">
+        <field name="name">crm.cskh.workflow.rule.list</field>
+        <field name="model">crm.cskh.workflow.rule</field>
+        <field name="arch" type="xml">
+            <tree string="Quy tắc quy trình CSKH">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="stage_id"/>
+                <field name="followup_days"/>
+                <field name="next_action"/>
+                <field name="send_email"/>
+                <field name="email_template_id"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- CUSTOM THÊM MỚI -->
+    <!-- Form view cấu hình quy tắc quy trình CSKH -->
+    <record id="view_crm_cskh_workflow_rule_form" model="ir.ui.view">
+        <field name="name">crm.cskh.workflow.rule.form</field>
+        <field name="model">crm.cskh.workflow.rule</field>
+        <field name="arch" type="xml">
+            <form string="Quy tắc quy trình CSKH">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="sequence"/>
+                            <field name="active"/>
+                            <field name="stage_id"/>
+                        </group>
+                        <group>
+                            <field name="followup_days"/>
+                            <field name="next_action"/>
+                            <field name="send_email"/>
+                            <field name="email_template_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="content"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- CUSTOM THÊM MỚI -->
+    <!-- Action mở màn hình cấu hình quy tắc quy trình CSKH -->
+    <record id="action_crm_cskh_workflow_rule" model="ir.actions.act_window">
+        <field name="name">Quy tắc quy trình CSKH</field>
+        <field name="res_model">crm.cskh.workflow.rule</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

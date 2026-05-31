@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_crm_lead_management_list" model="ir.ui.view">
+        <field name="name">crm.lead.management.list</field>
+        <field name="model">crm.lead</field>
+        <field name="arch" type="xml">
+            <tree string="Quản lý Lead &amp; cơ hội" decoration-danger="duplicate_state == 'exact' or data_quality_state == 'invalid'" decoration-warning="duplicate_state == 'similar' or data_quality_state == 'missing'" decoration-muted="not active">
+                <field name="name" string="Tên lead / cơ hội"/>
+                <field name="partner_name" string="Khách hàng"/>
+                <field name="contact_name" string="Người liên hệ chính"/>
+                <field name="email_from" string="Email"/>
+                <field name="phone" string="Điện thoại"/>
+                <field name="website" string="Website" optional="hide"/>
+                <field name="source_id" string="Nguồn lead"/>
+                <field name="user_id" string="Nhân viên phụ trách"/>
+                <field name="expected_revenue" string="Doanh thu kỳ vọng"/>
+                <field name="stage_id" string="Giai đoạn"/>
+                <field name="duplicate_state" widget="badge" decoration-success="duplicate_state == 'clean'" decoration-warning="duplicate_state == 'similar'" decoration-danger="duplicate_state == 'exact'"/>
+                <field name="data_quality_state" widget="badge" decoration-success="data_quality_state == 'valid'" decoration-warning="data_quality_state == 'missing'" decoration-danger="data_quality_state == 'invalid'"/>
+                <field name="last_interaction_date"/>
+                <field name="active" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_management_search" model="ir.ui.view">
+        <field name="name">crm.lead.management.search</field>
+        <field name="model">crm.lead</field>
+        <field name="arch" type="xml">
+            <search string="Quản lý Lead">
+                <field name="name"/>
+                <field name="partner_name"/>
+                <field name="contact_name"/>
+                <field name="email_from"/>
+                <field name="phone"/>
+                <field name="source_id"/>
+                <field name="user_id"/>
+                <filter name="active_leads" string="Đang hoạt động" domain="[('active', '=', True)]"/>
+                <filter name="archived_leads" string="Đã lưu trữ" domain="[('active', '=', False)]"/>
+                <filter name="missing_data" string="Thiếu dữ liệu" domain="[('data_quality_state', '=', 'missing')]"/>
+                <filter name="invalid_data" string="Sai định dạng" domain="[('data_quality_state', '=', 'invalid')]"/>
+                <filter name="similar_duplicate" string="Nghi trùng" domain="[('duplicate_state', '=', 'similar')]"/>
+                <filter name="exact_duplicate" string="Trùng hoàn toàn" domain="[('duplicate_state', '=', 'exact')]"/>
+                <separator/>
+                <filter name="group_stage" string="Giai đoạn bán hàng" context="{'group_by': 'stage_id'}"/>
+                <filter name="group_owner" string="Người phụ trách" context="{'group_by': 'user_id'}"/>
+                <filter name="group_source" string="Nguồn lead" context="{'group_by': 'source_id'}"/>
+                <filter name="group_quality" string="Chất lượng dữ liệu" context="{'group_by': 'data_quality_state'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="crm_lead_view_form_inherit_lead_management" model="ir.ui.view">
+        <field name="name">crm.lead.form.inherit.lead.management</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_open_duplicate_leads" type="object" class="oe_stat_button" icon="fa-copy" invisible="duplicate_count == 0">
+                    <field name="duplicate_count" widget="statinfo" string="Nghi trùng"/>
+                </button>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button name="action_open_transfer_owner_wizard" string="Chuyển phụ trách" type="object" invisible="type != 'lead'"/>
+                <button name="action_mark_interaction_today" string="Ghi nhận tương tác" type="object" invisible="type != 'lead'"/>
+                <button name="action_request_merge_approval" string="Yêu cầu gộp" type="object" invisible="duplicate_count == 0 or type != 'lead'"/>
+                <button name="action_request_delete_approval" string="Yêu cầu xóa" type="object" invisible="type != 'lead'"/>
+            </xpath>
+            <xpath expr="//field[@name='state_id']" position="attributes">
+                <attribute name="options">{'no_create': True, 'no_create_edit': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='country_id']" position="attributes">
+                <attribute name="options">{'no_create': True, 'no_create_edit': True}</attribute>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Quản lý dữ liệu Lead">
+                    <group>
+                        <group string="Thông tin bắt buộc">
+                            <field name="partner_name" required="1"/>
+                            <field name="contact_name" required="1"/>
+                            <field name="email_from" required="1"/>
+                            <field name="phone" required="1"/>
+                            <field name="website" required="1"/>
+                            <field name="source_id" required="1"/>
+                            <field name="user_id" required="1"/>
+                            <field name="initial_product_requirement" required="1"/>
+                        </group>
+                        <group string="Kiểm soát dữ liệu">
+                            <field name="data_quality_state" widget="badge" decoration-success="data_quality_state == 'valid'" decoration-warning="data_quality_state == 'missing'" decoration-danger="data_quality_state == 'invalid'"/>
+                            <field name="missing_required_fields" readonly="1"/>
+                            <field name="duplicate_state" widget="badge" decoration-success="duplicate_state == 'clean'" decoration-warning="duplicate_state == 'similar'" decoration-danger="duplicate_state == 'exact'"/>
+                            <field name="duplicate_lead_ids" widget="many2many_tags" readonly="1"/>
+                            <field name="last_interaction_date"/>
+                            <field name="inactive_archive_date" readonly="1"/>
+                            <field name="archived_by_cron" readonly="1"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="crm_lead_view_form_vietnamese_labels" model="ir.ui.view">
+        <field name="name">crm.lead.form.vietnamese.labels</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='action_set_won_rainbowman']" position="attributes">
+                <attribute name="string">Chốt thành công</attribute>
+                <attribute name="title">Đánh dấu là thành công</attribute>
+            </xpath>
+            <xpath expr="//header/button[@type='action' and @data-hotkey='l'][1]" position="attributes">
+                <attribute name="string">Thất bại</attribute>
+                <attribute name="title">Đánh dấu là thất bại</attribute>
+            </xpath>
+            <xpath expr="//header/button[@type='action' and @data-hotkey='l'][2]" position="attributes">
+                <attribute name="string">Thất bại</attribute>
+                <attribute name="title">Đánh dấu là thất bại</attribute>
+            </xpath>
+            <xpath expr="//header/button[@type='action' and @data-hotkey='v']" position="attributes">
+                <attribute name="string">Chuyển thành cơ hội</attribute>
+                <attribute name="help">Chuyển lead thành cơ hội bán hàng</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='toggle_active']" position="attributes">
+                <attribute name="string">Khôi phục</attribute>
+            </xpath>
+            <xpath expr="//widget[@name='web_ribbon'][1]" position="attributes">
+                <attribute name="title">Thất bại</attribute>
+            </xpath>
+            <xpath expr="//widget[@name='web_ribbon'][2]" position="attributes">
+                <attribute name="title">Thành công</attribute>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="placeholder">VD: Báo giá đồng phục công sở</attribute>
+                <attribute name="string">Tên lead / cơ hội</attribute>
+            </xpath>
+            <xpath expr="//field[@name='expected_revenue']" position="attributes">
+                <attribute name="string">Doanh thu kỳ vọng</attribute>
+            </xpath>
+            <xpath expr="//label[@for='expected_revenue']" position="attributes">
+                <attribute name="string">Doanh thu kỳ vọng</attribute>
+            </xpath>
+            <xpath expr="//field[@name='recurring_revenue']" position="attributes">
+                <attribute name="string">Doanh thu định kỳ</attribute>
+            </xpath>
+            <xpath expr="//field[@name='recurring_plan']" position="attributes">
+                <attribute name="placeholder">VD: Hằng tháng</attribute>
+                <attribute name="string">Kỳ lặp lại</attribute>
+            </xpath>
+            <xpath expr="//label[@for='probability']" position="attributes">
+                <attribute name="string">Xác suất</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_set_automated_probability']/i" position="attributes">
+                <attribute name="title">Chuyển sang xác suất tự động</attribute>
+                <attribute name="aria-label">Chuyển sang xác suất tự động</attribute>
+            </xpath>
+            <xpath expr="//button[@name='mail_action_blacklist_remove']" position="attributes">
+                <attribute name="title">Email này đang nằm trong danh sách chặn gửi thư. Bấm để bỏ chặn.</attribute>
+            </xpath>
+            <xpath expr="//button[@name='phone_action_blacklist_remove']" position="attributes">
+                <attribute name="title">Số điện thoại này đang nằm trong danh sách chặn gửi SMS. Bấm để bỏ chặn.</attribute>
+            </xpath>
+            <xpath expr="//span[contains(@class, 'fa-exclamation-triangle')]" position="attributes">
+                <attribute name="title">Khi lưu thay đổi này, thông tin khách hàng liên kết cũng sẽ được cập nhật.</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_show_potential_duplicates']//span[1]" position="replace">
+                <span class="o_stat_text" invisible="duplicate_lead_count &lt; 2">Lead tương tự</span>
+            </xpath>
+            <xpath expr="//button[@name='action_show_potential_duplicates']//span[2]" position="replace">
+                <span class="o_stat_text" invisible="duplicate_lead_count &gt; 1">Lead tương tự</span>
+            </xpath>
+            <xpath expr="//group[@name='lead_partner']//field[@name='partner_id']" position="attributes">
+                <attribute name="string">Khách hàng</attribute>
+            </xpath>
+            <xpath expr="//group[@name='opportunity_partner']//field[@name='partner_id']" position="attributes">
+                <attribute name="string">Khách hàng</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_name']" position="attributes">
+                <attribute name="string">Tên công ty</attribute>
+            </xpath>
+            <xpath expr="//label[@for='street']" position="attributes">
+                <attribute name="string">Địa chỉ</attribute>
+            </xpath>
+            <xpath expr="//label[@for='street_page_lead']" position="attributes">
+                <attribute name="string">Địa chỉ</attribute>
+            </xpath>
+            <xpath expr="//field[@name='street']" position="attributes">
+                <attribute name="placeholder">Địa chỉ...</attribute>
+            </xpath>
+            <xpath expr="//field[@name='street2']" position="attributes">
+                <attribute name="placeholder">Địa chỉ bổ sung...</attribute>
+            </xpath>
+            <xpath expr="//field[@name='city']" position="attributes">
+                <attribute name="placeholder">Thành phố</attribute>
+            </xpath>
+            <xpath expr="//field[@name='state_id']" position="attributes">
+                <attribute name="placeholder">Tỉnh/Thành</attribute>
+                <attribute name="string">Tỉnh/Thành</attribute>
+            </xpath>
+            <xpath expr="//field[@name='zip']" position="attributes">
+                <attribute name="placeholder">Mã bưu chính</attribute>
+                <attribute name="string">Mã bưu chính</attribute>
+            </xpath>
+            <xpath expr="//field[@name='country_id']" position="attributes">
+                <attribute name="placeholder">Quốc gia</attribute>
+                <attribute name="string">Quốc gia</attribute>
+            </xpath>
+            <xpath expr="//field[@name='website']" position="attributes">
+                <attribute name="string">Trang web</attribute>
+                <attribute name="placeholder">VD: https://vinatex.com.vn</attribute>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="string">Nhân viên phụ trách</attribute>
+            </xpath>
+            <xpath expr="//field[@name='team_id']" position="attributes">
+                <attribute name="string">Nhóm kinh doanh</attribute>
+            </xpath>
+            <xpath expr="//label[@for='contact_name']" position="attributes">
+                <attribute name="string">Người liên hệ chính</attribute>
+            </xpath>
+            <xpath expr="//label[@for='contact_name_page_lead']" position="attributes">
+                <attribute name="string">Người liên hệ chính</attribute>
+            </xpath>
+            <xpath expr="//field[@name='contact_name']" position="attributes">
+                <attribute name="string">Người liên hệ chính</attribute>
+            </xpath>
+            <xpath expr="//field[@name='title']" position="attributes">
+                <attribute name="string">Xưng danh</attribute>
+                <attribute name="placeholder">Chức danh xưng hô</attribute>
+            </xpath>
+            <xpath expr="//field[@name='function']" position="attributes">
+                <attribute name="string">Chức vụ</attribute>
+            </xpath>
+            <xpath expr="//field[@name='email_cc']" position="attributes">
+                <attribute name="string">Email CC</attribute>
+            </xpath>
+            <xpath expr="//field[@name='phone']" position="attributes">
+                <attribute name="string">Số điện thoại</attribute>
+            </xpath>
+            <xpath expr="//field[@name='mobile']" position="attributes">
+                <attribute name="string">Di động</attribute>
+            </xpath>
+            <xpath expr="//field[@name='priority']" position="attributes">
+                <attribute name="string">Mức ưu tiên</attribute>
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="attributes">
+                <attribute name="string">Thẻ phân loại</attribute>
+            </xpath>
+            <xpath expr="//label[@for='date_deadline']" position="attributes">
+                <attribute name="string">Ngày dự kiến chốt</attribute>
+            </xpath>
+            <xpath expr="//group[@name='Misc']" position="attributes">
+                <attribute name="string">Theo dõi</attribute>
+            </xpath>
+            <xpath expr="//page[@name='internal_notes']" position="attributes">
+                <attribute name="string">Ghi chú nội bộ</attribute>
+            </xpath>
+            <xpath expr="//page[@name='extra']" position="attributes">
+                <attribute name="string">Thông tin bổ sung</attribute>
+            </xpath>
+            <xpath expr="//page[@name='lead']" position="attributes">
+                <attribute name="string">Thông tin bổ sung</attribute>
+            </xpath>
+            <xpath expr="//page[@name='lead']/group/group[1]" position="attributes">
+                <attribute name="string">Thông tin liên hệ</attribute>
+            </xpath>
+            <xpath expr="//page[@name='lead']/group/group[3]" position="attributes">
+                <attribute name="string">Nguồn tiếp cận</attribute>
+            </xpath>
+            <xpath expr="//page[@name='lead']//field[@name='campaign_id']/.." position="attributes">
+                <attribute name="string">Nguồn tiếp cận</attribute>
+            </xpath>
+            <xpath expr="//group[@name='categorization']" position="attributes">
+                <attribute name="string">Nguồn tiếp cận</attribute>
+            </xpath>
+            <xpath expr="//group[@name='categorization']/following-sibling::group[1]" position="attributes">
+                <attribute name="string">Phân tích</attribute>
+            </xpath>
+            <xpath expr="//field[@name='campaign_id']" position="attributes">
+                <attribute name="string">Chiến dịch</attribute>
+            </xpath>
+            <xpath expr="//field[@name='medium_id']" position="attributes">
+                <attribute name="string">Kênh tiếp cận</attribute>
+            </xpath>
+            <xpath expr="//field[@name='referred']" position="attributes">
+                <attribute name="string">Người giới thiệu</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_open']" position="attributes">
+                <attribute name="string">Ngày mở</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_closed']" position="attributes">
+                <attribute name="string">Ngày đóng</attribute>
+            </xpath>
+            <xpath expr="//field[@name='lang_id']" position="attributes">
+                <attribute name="string">Ngôn ngữ</attribute>
+            </xpath>
+            <xpath expr="//field[@name='description']" position="attributes">
+                <attribute name="placeholder">Nhập ghi chú, nhu cầu hoặc bối cảnh trao đổi...</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_crm_lead_management" model="ir.actions.act_window">
+        <field name="name">Quản lý Lead &amp; cơ hội</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,form,graph,pivot</field>
+        <field name="view_id" ref="view_crm_lead_management_list"/>
+        <field name="domain">[('type', 'in', ['lead', 'opportunity'])]</field>
+        <field name="context">{'default_type': 'lead', 'search_default_active_leads': 1}</field>
+        <field name="search_view_id" ref="view_crm_lead_management_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Tạo lead hoặc cơ hội mới trực tiếp trên CRM
+            </p>
+            <p>
+                Lead phải có đầy đủ thông tin khách hàng, nguồn lead, người phụ trách và nhu cầu sản phẩm ban đầu.
+            </p>
+        </field>
+    </record>
+</odoo>

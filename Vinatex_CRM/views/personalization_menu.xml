@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_customer_personalization" model="ir.actions.act_window">
+        <field name="name">Kh&#225;ch h&#224;ng c&#225; nh&#226;n h&#243;a</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+    </record>
+
+    <record id="action_customer_personalization_tree" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_partner_tree_personalization"/>
+        <field name="act_window_id" ref="action_customer_personalization"/>
+    </record>
+
+    <record id="action_customer_personalization_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_partner_form_personalization"/>
+        <field name="act_window_id" ref="action_customer_personalization"/>
+    </record>
+
+    <menuitem id="menu_customer_personalization"
+              name="Kh&#225;ch h&#224;ng c&#225; nh&#226;n h&#243;a"
+              parent="menu_crm_tong_hop_campaign"
+              action="action_customer_personalization"
+              sequence="30"/>
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rule_crm_lead_data_approval_sales_own" model="ir.rule">
+        <field name="name">Nhân viên kinh doanh chỉ thấy yêu cầu phê duyệt liên quan</field>
+        <field name="model_id" ref="model_crm_lead_data_approval"/>
+        <field name="domain_force">['|', ('requester_id', '=', user.id), ('lead_id.user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+    </record>
+
+    <record id="rule_crm_lead_data_approval_manager_all" model="ir.rule">
+        <field name="name">Quản lý kinh doanh thấy toàn bộ yêu cầu phê duyệt</field>
+        <field name="model_id" ref="model_crm_lead_data_approval"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('sales_team.group_sale_manager'))]"/>
+    </record>
+</odoo>

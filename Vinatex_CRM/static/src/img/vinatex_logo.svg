@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 118 54" role="img" aria-labelledby="title desc">
+  <title id="title">Vinatex</title>
+  <desc id="desc">Logo Vinatex recreated for CRM website header</desc>
+  <rect width="118" height="54" fill="#fff"/>
+  <ellipse cx="38" cy="20" rx="34" ry="17" fill="none" stroke="#0059a8" stroke-width="2.2"/>
+  <path d="M15 14h62l-6 6H50v19h-9V20H21z" fill="#0059a8"/>
+  <path d="M54 22h13L55 39h-9z" fill="#0059a8"/>
+  <path d="M58 14h16L62 21H48z" fill="#0059a8"/>
+  <text x="14" y="49" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="800" fill="#0059a8">VINATEX</text>
+</svg>

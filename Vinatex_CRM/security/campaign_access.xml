@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="access_mail_campaign_user" model="ir.model.access">
+        <field name="name">access.mail.campaign</field>
+        <field name="model_id" search="[('model', '=', 'custom.mail.campaign')]"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <record id="access_mail_log_user" model="ir.model.access">
+        <field name="name">access.mail.log</field>
+        <field name="model_id" search="[('model', '=', 'custom.mail.log')]"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+
+    <record id="access_schedule_campaign_wizard_user" model="ir.model.access">
+        <field name="name">access.schedule.campaign.wizard</field>
+        <field name="model_id" search="[('model', '=', 'schedule.campaign.wizard')]"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <record id="access_campaign_loyalty_rule_wizard_user" model="ir.model.access">
+        <field name="name">access.campaign.loyalty.rule.wizard</field>
+        <field name="model_id" search="[('model', '=', 'campaign.loyalty.rule.wizard')]"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+</odoo>

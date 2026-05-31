@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mail_campaign_form_personalization" model="ir.ui.view">
+        <field name="name">custom.mail.campaign.form.personalization.visible.filters</field>
+        <field name="model">custom.mail.campaign</field>
+        <field name="inherit_id" ref="view_mail_campaign_form"/>
+        <field name="priority" eval="99"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='recipient_count']" position="after">
+                <separator string="Ti&#234;u ch&#237; loyalty v&#224; c&#225; nh&#226;n h&#243;a"/>
+                <field name="loyalty_tier" string="H&#7841;ng kh&#225;ch h&#224;ng"/>
+                <field name="retention_segment" string="Nh&#243;m ch&#259;m s&#243;c"/>
+                <field name="min_loyalty_score" string="&#272;i&#7875;m loyalty t&#7889;i thi&#7875;u"/>
+                <field name="personalization_goal" string="M&#7909;c ti&#234;u c&#225; nh&#226;n h&#243;a"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_mail_campaign_form_personalization_note" model="ir.ui.view">
+        <field name="name">custom.mail.campaign.form.personalization.note</field>
+        <field name="model">custom.mail.campaign</field>
+        <field name="inherit_id" ref="view_mail_campaign_form"/>
+        <field name="priority" eval="100"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="G&#7907;i &#253; c&#225; nh&#226;n h&#243;a">
+                    <group>
+                        <div class="text-muted" colspan="2">
+                            C&#225;c ti&#234;u ch&#237; loyalty &#7903; kh&#7889;i Ph&#226;n lo&#7841;i kh&#225;ch h&#224;ng s&#7869; &#273;&#432;&#7907;c d&#249;ng khi b&#7845;m T&#7843;i danh s&#225;ch ng&#432;&#7901;i nh&#7853;n.
+                            V&#237; d&#7909;: H&#7841;ng kh&#225;ch h&#224;ng = VIP &#273;&#7875; g&#7917;i email tri &#226;n; Nh&#243;m ch&#259;m s&#243;c = L&#226;u ch&#432;a giao d&#7883;ch &#273;&#7875; remarketing; &#272;i&#7875;m loyalty t&#7889;i thi&#7875;u = 60 &#273;&#7875; g&#7917;i cho kh&#225;ch t&#7915; h&#7841;ng V&#224;ng tr&#7903; l&#234;n.
+                        </div>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_mail_campaign_search_personalization" model="ir.ui.view">
+        <field name="name">custom.mail.campaign.search.personalization</field>
+        <field name="model">custom.mail.campaign</field>
+        <field name="inherit_id" ref="view_mail_campaign_search"/>
+        <field name="priority" eval="99"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="retention_segment" string="Nh&#243;m ch&#259;m s&#243;c"/>
+                <field name="loyalty_tier" string="H&#7841;ng kh&#225;ch h&#224;ng"/>
+                <filter name="filter_loyalty_campaign"
+                        string="Chiến dịch tri ân"
+                        domain="[('personalization_goal','=','loyalty')]"/>
+                <filter name="group_loyalty_tier"
+                        string="H&#7841;ng kh&#225;ch h&#224;ng"
+                        context="{'group_by':'loyalty_tier'}"/>
+                <filter name="group_retention_segment"
+                        string="Nh&#243;m ch&#259;m s&#243;c"
+                        context="{'group_by':'retention_segment'}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

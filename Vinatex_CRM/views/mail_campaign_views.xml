@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mail_campaign_search" model="ir.ui.view">
+        <field name="name">custom.mail.campaign.search</field>
+        <field name="model">custom.mail.campaign</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="template_id"/>
+                <field name="segment"/>
+                <field name="customer_status"/>
+                <filter name="filter_draft" string="Nháp" domain="[('state','=','draft')]"/>
+                <filter name="filter_scheduled" string="Đã lên lịch" domain="[('state','=','scheduled')]"/>
+                <filter name="filter_sent" string="Đã gửi" domain="[('state','=','sent')]"/>
+                <filter name="filter_remarketing" string="Remarketing" domain="[('remarketing','=',True)]"/>
+                <filter name="group_state" string="Trạng thái" context="{'group_by':'state'}"/>
+                <filter name="group_segment" string="Nhóm khách hàng" context="{'group_by':'segment'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_mail_campaign_list" model="ir.ui.view">
+        <field name="name">custom.mail.campaign.list</field>
+        <field name="model">custom.mail.campaign</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string="Tên chiến dịch"/>
+                <field name="template_id" string="Mẫu email"/>
+                <field name="segment" string="Nhóm khách hàng"/>
+                <field name="customer_status" string="Tình trạng khách hàng"/>
+                <field name="recipient_count" string="Số người nhận" widget="badge" class="text-center"/>
+                <field name="scheduled_date" string="Thời gian gửi dự kiến"/>
+                <field name="approved" string="Đã duyệt"/>
+                <field name="state" string="Trạng thái" widget="badge"
+                       decoration-success="state == 'sent'"
+                       decoration-info="state == 'scheduled'"
+                       decoration-muted="state == 'cancel'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_mail_campaign_form" model="ir.ui.view">
+        <field name="name">custom.mail.campaign.form</field>
+        <field name="model">custom.mail.campaign</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <form string="Chiến dịch email">
+                <header>
+                    <button name="action_load_recipients" string="Tải danh sách nhận" type="object" class="btn-secondary" invisible="state != 'draft'"/>
+                    <button name="action_send_now" string="Gửi ngay" type="object" class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_schedule" string="Lên lịch gửi" type="object" class="btn-secondary" invisible="state != 'draft'"/>
+                    <button name="action_cancel" string="Hủy" type="object" invisible="state in ('sent', 'cancel')"/>
+                    <button name="action_reset_to_draft" string="Đưa về nháp" type="object" invisible="state == 'draft'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,scheduled,sent"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Thông tin chiến dịch">
+                            <field name="name"/>
+                            <field name="template_id"/>
+                            <field name="remarketing"/>
+                            <field name="approved"/>
+                            <field name="scheduled_date"/>
+                        </group>
+                        <group string="Điều kiện phân nhóm">
+                            <field name="segment"/>
+                            <field name="customer_status"/>
+                            <field name="potential_level"/>
+                            <field name="lead_source_id"/>
+                            <field name="recipient_count" widget="badge" class="text-center"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Người nhận">
+                            <field name="recipient_ids" widget="many2many_tags"/>
+                        </page>
+                        <page string="Nhật ký gửi Email">
+                            <field name="sent_log_ids" readonly="1">
+                                <tree>
+                                    <field name="partner_id" string="Khách hàng"/>
+                                    <field name="email_to" string="Email nhận"/>
+                                    <field name="sent_date" string="Thời gian gửi"/>
+                                    <field name="status" string="Trạng thái"/>
+                                    <field name="error_message" string="Thông báo lỗi"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_crm_lead_duplicate_review" model="ir.actions.act_window">
+        <field name="name">Lead nghi trùng</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('type', 'in', ['lead', 'opportunity']), ('duplicate_state', 'in', ['similar', 'exact'])]</field>
+        <field name="search_view_id" ref="view_crm_lead_management_search"/>
+    </record>
+
+    <record id="action_crm_lead_missing_data" model="ir.actions.act_window">
+        <field name="name">Lead thiếu dữ liệu</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('type', 'in', ['lead', 'opportunity']), ('data_quality_state', 'in', ['missing', 'invalid'])]</field>
+        <field name="search_view_id" ref="view_crm_lead_management_search"/>
+    </record>
+
+    <record id="action_crm_lead_inactive_archived" model="ir.actions.act_window">
+        <field name="name">Lead ngừng tương tác / đã lưu trữ</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('type', 'in', ['lead', 'opportunity']), ('active', '=', False)]</field>
+        <field name="context">{'active_test': False}</field>
+        <field name="search_view_id" ref="view_crm_lead_management_search"/>
+    </record>
+
+    <record id="action_crm_tong_hop_dashboard" model="ir.actions.client">
+        <field name="name">Tổng quan CRM</field>
+        <field name="tag">crm_tong_hop.dashboard</field>
+    </record>
+
+    <menuitem id="menu_crm_tong_hop_root" name="VINATEX CRM" sequence="30"/>
+
+    <menuitem id="menu_crm_tong_hop_overview" name="Tổng quan" parent="menu_crm_tong_hop_root" sequence="10"/>
+    <menuitem id="menu_crm_tong_hop_leads" name="Lead &amp; cơ hội" parent="menu_crm_tong_hop_root" sequence="20"/>
+    <menuitem id="menu_crm_tong_hop_cskh" name="Chăm sóc khách hàng" parent="menu_crm_tong_hop_root" sequence="30"/>
+    <menuitem id="menu_crm_tong_hop_service" name="Khiếu nại &amp; dịch vụ" parent="menu_crm_tong_hop_root" sequence="40"/>
+    <menuitem id="menu_crm_tong_hop_analytics" name="Phân tích" parent="menu_crm_tong_hop_root" sequence="50"/>
+    <menuitem id="menu_crm_tong_hop_data" name="Kiểm soát dữ liệu" parent="menu_crm_tong_hop_root" sequence="60"/>
+    <menuitem id="menu_crm_tong_hop_config" name="Cấu hình" parent="menu_crm_tong_hop_root" sequence="90"/>
+
+    <menuitem id="menu_crm_tong_hop_lead_list" name="Quản lý Lead &amp; cơ hội" parent="menu_crm_tong_hop_leads" action="action_crm_lead_management" sequence="10"/>
+    <menuitem id="menu_crm_tong_hop_approvals" name="Phê duyệt dữ liệu" parent="menu_crm_tong_hop_data" action="action_crm_lead_data_approval" sequence="10"/>
+    <menuitem id="menu_crm_tong_hop_duplicate_review" name="Lead nghi trùng" parent="menu_crm_tong_hop_data" action="action_crm_lead_duplicate_review" sequence="20"/>
+    <menuitem id="menu_crm_tong_hop_missing_data" name="Lead thiếu dữ liệu" parent="menu_crm_tong_hop_data" action="action_crm_lead_missing_data" sequence="30"/>
+    <menuitem id="menu_crm_tong_hop_archived" name="Lead ngừng tương tác / đã lưu trữ" parent="menu_crm_tong_hop_data" action="action_crm_lead_inactive_archived" sequence="40"/>
+
+    <menuitem id="menu_crm_tong_hop_cskh_profiles" name="Hồ sơ CSKH" parent="menu_crm_tong_hop_cskh" action="action_crm_cskh_profile" sequence="10"/>
+    <menuitem id="menu_crm_tong_hop_cskh_rules" name="Quy tắc quy trình CSKH" parent="menu_crm_tong_hop_config" action="action_crm_cskh_workflow_rule" sequence="10"/>
+
+    <menuitem id="menu_crm_tong_hop_complaints" name="Phiếu khiếu nại" parent="menu_crm_tong_hop_service" action="action_complaint_ticket" sequence="10"/>
+    <menuitem id="menu_crm_tong_hop_kpi_dashboard" name="Tổng quan điều hành" parent="menu_crm_tong_hop_overview" action="action_crm_tong_hop_dashboard" sequence="10"/>
+    <menuitem id="menu_crm_tong_hop_customer_satisfaction" name="Mức độ hài lòng" parent="menu_crm_tong_hop_service" action="action_customer_satisfaction" sequence="20"/>
+
+    <menuitem id="menu_crm_tong_hop_report_complaint_severity" name="Khiếu nại theo mức độ" parent="menu_crm_tong_hop_analytics" action="action_complaint_by_severity" sequence="10"/>
+    <menuitem id="menu_crm_tong_hop_report_complaint_state" name="Khiếu nại theo trạng thái" parent="menu_crm_tong_hop_analytics" action="action_complaint_by_state" sequence="20"/>
+    <menuitem id="menu_crm_tong_hop_report_late_sla" name="Khiếu nại trễ SLA" parent="menu_crm_tong_hop_analytics" action="action_complaint_sla_late" sequence="30"/>
+    <menuitem id="menu_crm_tong_hop_report_fail_reason" name="Phân tích lý do thất bại" parent="menu_crm_tong_hop_analytics" action="action_fail_reason_analysis" sequence="40"/>
+
+    <menuitem id="menu_crm_tong_hop_analytics_kpi" name="Tổng quan chỉ số CRM" parent="menu_crm_tong_hop_analytics" action="action_crm_analytics_kpi" sequence="50"/>
+    <menuitem id="menu_crm_tong_hop_conversion" name="Phân tích chuyển đổi Lead" parent="menu_crm_tong_hop_analytics" action="action_crm_conversion_report" sequence="60"/>
+    <menuitem id="menu_crm_tong_hop_sales_performance" name="Phân tích hiệu suất kinh doanh" parent="menu_crm_tong_hop_analytics" action="action_crm_sales_performance" sequence="70"/>
+    <menuitem id="menu_crm_tong_hop_retention" name="Phân tích khách hàng quay lại" parent="menu_crm_tong_hop_analytics" action="action_crm_customer_retention" sequence="80"/>
+    <menuitem id="menu_crm_tong_hop_lost_reason" name="Theo dõi cơ hội thất bại" parent="menu_crm_tong_hop_analytics" action="action_crm_lost_reason_analytics" sequence="90"/>
+</odoo>

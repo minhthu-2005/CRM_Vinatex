@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="complaint_ticket_form_inherit_unified_workflow" model="ir.ui.view">
+        <field name="name">crm.service.complaint.ticket.form.inherit.unified.workflow</field>
+        <field name="model">crm.service.complaint.ticket</field>
+        <field name="inherit_id" ref="view_complaint_ticket_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lead_id']" position="after">
+                <field name="cskh_profile_id" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

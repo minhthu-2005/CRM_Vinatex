@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="crm_tong_hop.Dashboard" owl="1">
+        <div class="o_crm_th_dashboard">
+            <t t-if="state.loading">
+                <div class="o_crm_th_loading">Đang tải dữ liệu...</div>
+            </t>
+            <t t-else="">
+                <section class="o_crm_th_hero">
+                    <div>
+                        <p>Tổng quan điều hành</p>
+                        <h1>Dữ liệu kết nối. Chăm sóc khác biệt.</h1>
+                        <span>VINATEX CRM hợp nhất dữ liệu lead, CSKH, chiến dịch, khiếu nại và kiểm soát chất lượng trên một không gian vận hành.</span>
+                    </div>
+                    <div class="o_crm_th_hero_actions">
+                        <button type="button" class="o_crm_th_primary" t-on-click="() => this.openAction('crm_tong_hop.action_crm_lead_management')">
+                            <i class="fa fa-plus"/>
+                            <span>Lead mới</span>
+                        </button>
+                        <button type="button" t-on-click="() => this.openAction('crm_tong_hop.action_crm_cskh_profile')">
+                            <i class="fa fa-headphones"/>
+                            <span>Mở CSKH</span>
+                        </button>
+                        <button type="button" class="o_crm_th_danger" t-on-click="() => this.openAction('crm_tong_hop.action_complaint_ticket')">
+                            <i class="fa fa-exclamation-triangle"/>
+                            <span>Khiếu nại</span>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="o_crm_th_kpis">
+                    <article t-foreach="state.data.kpis" t-as="kpi" t-key="kpi.key" t-att-class="'o_crm_th_kpi o_crm_th_kpi_' + kpi.tone">
+                        <i t-att-class="'fa ' + kpi.icon"/>
+                        <div>
+                            <span t-esc="kpi.label"/>
+                            <strong t-esc="kpi.value"/>
+                            <small t-esc="kpi.caption"/>
+                        </div>
+                        <em t-esc="kpi.trend"/>
+                    </article>
+                </section>
+
+                <section class="o_crm_th_grid">
+                    <article class="o_crm_th_panel o_crm_th_pipeline">
+                        <header>
+                            <div>
+                                <p>Quy trình bán hàng</p>
+                                <h2>Lead theo giai đoạn</h2>
+                            </div>
+                            <div class="o_crm_th_conversion">
+                                <span>Tỷ lệ chuyển đổi</span>
+                                <strong><t t-esc="state.data.meta.conversion_rate"/>%</strong>
+                                <small><t t-esc="state.data.meta.won_count"/> / <t t-esc="state.data.meta.total_leads"/></small>
+                            </div>
+                            <button type="button" t-on-click="() => this.openAction('crm_tong_hop.action_crm_lead_management')">Xem tất cả</button>
+                        </header>
+                        <div class="o_crm_th_stage_list">
+                            <div class="o_crm_th_stage" t-foreach="state.data.pipeline" t-as="stage" t-key="stage.key">
+                                <i class="fa fa-check-square-o"/>
+                                <div class="o_crm_th_stage_body">
+                                    <div>
+                                        <strong t-esc="stage.name"/>
+                                        <span><t t-esc="stage.count"/> lead</span>
+                                        <small><t t-esc="stage.share"/>%</small>
+                                    </div>
+                                    <div class="o_crm_th_progress">
+                                        <i t-att-style="'width:' + stage.percent + '%'"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="o_crm_th_panel o_crm_th_followups">
+                        <header>
+                            <div>
+                                <p>CSKH</p>
+                                <h2>Việc cần theo dõi</h2>
+                            </div>
+                            <button type="button" t-on-click="() => this.openAction('crm_tong_hop.action_crm_cskh_profile')">Mở CSKH</button>
+                        </header>
+                        <ul class="o_crm_th_list">
+                            <li t-foreach="state.data.followups" t-as="item" t-key="item.id" t-att-class="'o_crm_th_followup_' + item.urgency">
+                                <b t-esc="item.initial"/>
+                                <div>
+                                    <strong t-esc="item.customer"/>
+                                    <span t-esc="item.next_action"/>
+                                </div>
+                                <em t-esc="item.badge"/>
+                            </li>
+                        </ul>
+                    </article>
+
+                    <article class="o_crm_th_panel o_crm_th_quality_panel">
+                        <header>
+                            <div>
+                                <p>Chất lượng dữ liệu</p>
+                                <h2>Kiểm soát chất lượng</h2>
+                            </div>
+                            <button type="button" t-on-click="() => this.openAction('crm_tong_hop.action_crm_lead_duplicate_review')">Xem tất cả</button>
+                        </header>
+                        <div class="o_crm_th_quality">
+                            <button t-foreach="state.data.quality.cards"
+                                    t-as="card"
+                                    t-key="card.key"
+                                    type="button"
+                                    t-att-class="'o_crm_th_quality_' + card.tone"
+                                    t-on-click="() => this.openAction(card.action)">
+                                <i t-att-class="'fa ' + card.icon"/>
+                                <strong t-esc="card.value"/>
+                                <span t-esc="card.label"/>
+                                <small t-esc="card.caption"/>
+                            </button>
+                        </div>
+                    </article>
+
+                    <article class="o_crm_th_panel o_crm_th_campaigns">
+                        <header>
+                            <div>
+                                <p>Chiến dịch</p>
+                                <h2>Chiến dịch gần đây</h2>
+                            </div>
+                            <button type="button" t-on-click="() => this.openAction('crm_tong_hop.action_mail_campaign')">Mở campaign</button>
+                        </header>
+                        <ul class="o_crm_th_campaign_list">
+                            <li t-foreach="state.data.campaigns" t-as="campaign" t-key="campaign.id">
+                                <div>
+                                    <strong t-esc="campaign.name"/>
+                                    <span><t t-esc="campaign.recipients"/> người nhận</span>
+                                </div>
+                                <em t-att-class="'o_crm_th_campaign_' + campaign.tone" t-esc="campaign.state"/>
+                            </li>
+                        </ul>
+                    </article>
+                </section>
+
+                <footer class="o_crm_th_footer">
+                    <span>Cập nhật dữ liệu lần cuối: <t t-esc="state.data.meta.last_updated"/></span>
+                    <span><i/> Tích hợp CRM: Hoạt động</span>
+                    <span><i/> Kết nối Website: Hoạt động</span>
+                </footer>
+            </t>
+        </div>
+    </t>
+</templates>

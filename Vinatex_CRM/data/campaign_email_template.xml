@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="template_welcome_email_vn" model="mail.template">
+        <field name="name">Email chào mừng khách hàng Vinatex Đà Nẵng</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="subject">Vinatex Đà Nẵng kính chào {{ object.name }}</field>
+        <field name="email_from">{{ user.email_formatted }}</field>
+        <field name="email_to">{{ object.email }}</field>
+        <field name="is_campaign_template">True</field>
+        <field name="campaign_template_type">welcome</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Xin chào <t t-out="object.name or ''"/>,</p>
+                <p>Công ty Cổ phần Vinatex Đà Nẵng cảm ơn Quý khách đã quan tâm đến năng lực sản xuất may mặc của chúng tôi.</p>
+                <p>Đội ngũ kinh doanh sẽ liên hệ để trao đổi thêm về mẫu thiết kế, nguyên phụ liệu, số lượng, tiến độ giao hàng và các điều khoản hợp tác.</p>
+                <p>Trân trọng,<br/>Đội ngũ Kinh doanh Vinatex Đà Nẵng</p>
+            </div>
+        </field>
+    </record>
+
+    <record id="template_followup_email_vn" model="mail.template">
+        <field name="name">Email theo dõi báo giá và yêu cầu sản xuất</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="subject">Vinatex Đà Nẵng nhắc lịch trao đổi yêu cầu sản xuất của {{ object.name }}</field>
+        <field name="email_from">{{ user.email_formatted }}</field>
+        <field name="email_to">{{ object.email }}</field>
+        <field name="is_campaign_template">True</field>
+        <field name="campaign_template_type">follow_up</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Xin chào <t t-out="object.name or ''"/>,</p>
+                <p>Chúng tôi gửi email này để tiếp tục trao đổi về nhu cầu sản xuất/gia công may mặc của Quý khách.</p>
+                <p>Nếu Quý khách cần cập nhật mẫu thiết kế, số lượng, thời gian giao hàng hoặc điều kiện nguyên phụ liệu, vui lòng phản hồi email này để đội ngũ kinh doanh hỗ trợ kịp thời.</p>
+                <p>Trân trọng,<br/>Đội ngũ Kinh doanh Vinatex Đà Nẵng</p>
+            </div>
+        </field>
+    </record>
+
+    <record id="template_remarketing_email_vn" model="mail.template">
+        <field name="name">Email remarketing khách hàng lâu chưa giao dịch</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="subject">Vinatex Đà Nẵng mong được tiếp tục đồng hành cùng {{ object.name }}</field>
+        <field name="email_from">{{ user.email_formatted }}</field>
+        <field name="email_to">{{ object.email }}</field>
+        <field name="is_campaign_template">True</field>
+        <field name="campaign_template_type">remarketing</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Xin chào <t t-out="object.name or ''"/>,</p>
+                <p>Đã một thời gian Vinatex Đà Nẵng chưa có dịp hợp tác lại với Quý khách. Chúng tôi mong muốn cập nhật nhu cầu sản xuất may mặc mới và đề xuất phương án hợp tác phù hợp.</p>
+                <ul>
+                    <li>Rà soát tiến độ sản xuất theo kế hoạch đơn hàng mới.</li>
+                    <li>Tư vấn phương án nguyên phụ liệu hoặc gia công theo mẫu có sẵn.</li>
+                    <li>Đề xuất chính sách chăm sóc phù hợp với lịch sử giao dịch.</li>
+                </ul>
+                <p>Trân trọng,<br/>Đội ngũ Kinh doanh và Chăm sóc khách hàng Vinatex Đà Nẵng</p>
+            </div>
+        </field>
+    </record>
+
+    <record id="template_subscription_email_vn" model="mail.template">
+        <field name="name">Email subscription cập nhật năng lực sản xuất</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="subject">Đăng ký nhận cập nhật từ Vinatex Đà Nẵng</field>
+        <field name="email_from">{{ user.email_formatted }}</field>
+        <field name="email_to">{{ object.email }}</field>
+        <field name="is_campaign_template">True</field>
+        <field name="campaign_template_type">subscription</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Xin chào <t t-out="object.name or ''"/>,</p>
+                <p>Vinatex Đà Nẵng gửi Quý khách lời mời đăng ký nhận thông tin cập nhật về năng lực sản xuất, lịch nhận đơn hàng, chính sách hợp tác và các chương trình chăm sóc khách hàng.</p>
+                <p>Nếu Quý khách quan tâm đến các đơn hàng may mặc, gia công theo mẫu thiết kế hoặc kế hoạch nguyên phụ liệu, vui lòng phản hồi email này để đội ngũ kinh doanh cập nhật thông tin phù hợp.</p>
+                <p>Trân trọng,<br/>Đội ngũ Kinh doanh Vinatex Đà Nẵng</p>
+            </div>
+        </field>
+    </record>
+
+    <record id="template_promotion_sample_vn" model="mail.template">
+        <field name="name">Email ưu đãi thử mẫu sản xuất VINATEX</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="subject">VINATEX đề xuất ưu đãi thử mẫu cho {{ object.name }}</field>
+        <field name="email_from">{{ user.email_formatted }}</field>
+        <field name="email_to">{{ object.email }}</field>
+        <field name="is_campaign_template">True</field>
+        <field name="campaign_template_type">promotion</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Xin chào <t t-out="object.name or ''"/>,</p>
+                <p>VINATEX gửi Quý khách đề xuất ưu đãi thử mẫu sản xuất cho các dòng sản phẩm may mặc đang được quan tâm.</p>
+                <p>Đội ngũ kinh doanh có thể hỗ trợ tư vấn chất liệu, định mức nguyên phụ liệu, bảng size và phương án giao hàng phù hợp với kế hoạch của Quý khách.</p>
+                <p>Trân trọng,<br/>Đội ngũ Kinh doanh VINATEX</p>
+            </div>
+        </field>
+    </record>
+
+    <record id="template_thank_you_after_meeting_vn" model="mail.template">
+        <field name="name">Email cảm ơn sau buổi trao đổi khách hàng</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="subject">VINATEX cảm ơn Quý khách đã trao đổi cùng chúng tôi</field>
+        <field name="email_from">{{ user.email_formatted }}</field>
+        <field name="email_to">{{ object.email }}</field>
+        <field name="is_campaign_template">True</field>
+        <field name="campaign_template_type">thank_you</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Xin chào <t t-out="object.name or ''"/>,</p>
+                <p>VINATEX trân trọng cảm ơn Quý khách đã dành thời gian trao đổi về nhu cầu sản xuất, mẫu thiết kế và kế hoạch hợp tác.</p>
+                <p>Chúng tôi sẽ tổng hợp thông tin và phản hồi phương án phù hợp trong thời gian sớm nhất.</p>
+                <p>Trân trọng,<br/>Đội ngũ Chăm sóc khách hàng VINATEX</p>
+            </div>
+        </field>
+    </record>
+
+    <record id="template_retention_risk_vn" model="mail.template">
+        <field name="name">Email chăm sóc khách hàng có nguy cơ rời bỏ</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="subject">VINATEX mong được lắng nghe thêm từ {{ object.name }}</field>
+        <field name="email_from">{{ user.email_formatted }}</field>
+        <field name="email_to">{{ object.email }}</field>
+        <field name="is_campaign_template">True</field>
+        <field name="campaign_template_type">retention</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Xin chào <t t-out="object.name or ''"/>,</p>
+                <p>VINATEX mong muốn cập nhật thêm về trải nghiệm hợp tác gần đây để cải thiện chất lượng chăm sóc và tiến độ phản hồi.</p>
+                <p>Nếu Quý khách có góp ý về báo giá, chất lượng mẫu, tiến độ giao hàng hoặc điều khoản hợp tác, đội ngũ của chúng tôi luôn sẵn sàng tiếp nhận.</p>
+                <p>Trân trọng,<br/>Đội ngũ Chăm sóc khách hàng VINATEX</p>
+            </div>
+        </field>
+    </record>
+
+    <record id="template_vip_priority_offer_vn" model="mail.template">
+        <field name="name">Email ưu tiên lịch sản xuất cho khách VIP</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="subject">VINATEX đề xuất lịch ưu tiên dành cho {{ object.name }}</field>
+        <field name="email_from">{{ user.email_formatted }}</field>
+        <field name="email_to">{{ object.email }}</field>
+        <field name="is_campaign_template">True</field>
+        <field name="campaign_template_type">vip_offer</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Xin chào <t t-out="object.name or ''"/>,</p>
+                <p>Dựa trên nhu cầu hợp tác và kế hoạch sản xuất, VINATEX có thể hỗ trợ Quý khách bằng lịch phản hồi ưu tiên và kế hoạch chuẩn bị nguyên phụ liệu sớm.</p>
+                <p>Đội ngũ kinh doanh sẽ liên hệ để xác nhận sản lượng, thời điểm giao hàng và các yêu cầu kỹ thuật quan trọng.</p>
+                <p>Trân trọng,<br/>Đội ngũ Kinh doanh VINATEX</p>
+            </div>
+        </field>
+    </record>
+</odoo>

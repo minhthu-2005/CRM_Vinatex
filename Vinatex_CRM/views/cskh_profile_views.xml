@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- CUSTOM THÊM MỚI -->
+    <!-- List view quản lý Hồ sơ CSKH -->
+    <record id="view_crm_cskh_profile_list" model="ir.ui.view">
+        <field name="name">crm.cskh.profile.list</field>
+        <field name="model">crm.cskh.profile</field>
+        <field name="arch" type="xml">
+            <tree string="Hồ sơ CSKH" class="o_cskh_profile_list">
+                <field name="name" string="Mã hồ sơ CSKH" width="115px"/>
+                <field name="customer_id" string="Khách hàng" width="185px"/>
+                <field name="lead_id" string="Cơ hội" width="245px"/>
+                <field name="interaction_type" string="Loại tương tác" width="130px"/>
+                <field name="interaction_date" string="Thời gian tương tác" width="150px"/>
+                <field name="email_subject" optional="hide"/>
+                <field name="user_id" string="Nhân viên phụ trách" width="170px"/>
+                <field name="product_category" string="Chủng loại sản phẩm" width="150px"/>
+                <field name="expected_order_qty" string="Số lượng đặt hàng" width="130px"/>
+                <field name="followup_deadline" string="Hạn chăm sóc tiếp" width="135px"/>
+                <field name="crm_update_deadline" optional="hide"/>
+                <field name="state"
+                       string="Trạng thái"
+                       widget="badge"
+                       width="140px"
+                       decoration-muted="state == 'draft'"
+                       decoration-warning="state == 'pending'"
+                       decoration-success="state == 'done'"
+                       decoration-danger="state == 'cancel'"/>
+                <field name="is_overdue" optional="hide"/>
+                <field name="is_crm_update_late" optional="hide"/>
+                <field name="workflow_generated" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- CUSTOM THÊM MỚI -->
+    <!-- Form view quản lý Hồ sơ CSKH -->
+    <record id="view_crm_cskh_profile_form" model="ir.ui.view">
+        <field name="name">crm.cskh.profile.form</field>
+        <field name="model">crm.cskh.profile</field>
+        <field name="arch" type="xml">
+            <form string="Hồ sơ CSKH">
+                <header>
+                    <!-- CUSTOM THÊM MỚI -->
+                    <!-- Button hoàn thành Hồ sơ CSKH -->
+                    <button name="action_done"
+                            type="object"
+                            string="Hoàn thành"
+                            class="btn-primary"/>
+
+                    <!-- CUSTOM THÊM MỚI -->
+                    <!-- Button hủy Hồ sơ CSKH -->
+                    <button name="action_cancel"
+                            type="object"
+                            string="Hủy"
+                            class="btn-secondary"/>
+
+                    <!-- CUSTOM THÊM MỚI -->
+                    <!-- Hiển thị trạng thái Hồ sơ CSKH -->
+                    <field name="state" widget="statusbar" clickable="1"/>
+                </header>
+
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="lead_id"
+                                   string="Cơ hội"
+                                   required="1"
+                                   placeholder="Chọn hoặc tạo cơ hội bán hàng"
+                                   context="{
+                                       'form_view_ref': 'crm_tong_hop.view_crm_lead_cskh_quick_form',
+                                       'default_type': 'opportunity',
+                                       'default_partner_id': customer_id,
+                                       'skip_auto_cskh_profile': True
+                                   }"
+                                   options="{'no_quick_create': True}"/>
+                            <field name="customer_id"
+                                   readonly="1"
+                                   force_save="1"
+                                   required="1"
+                                   placeholder="Tự lấy theo cơ hội đã chọn"/>
+                            <field name="interaction_type"
+                                   required="1"
+                                   placeholder="Chọn loại tương tác"/>
+                        </group>
+
+                        <group>
+                            <field name="interaction_date" required="1"/>
+                            <field name="user_id"/>
+                            <field name="followup_deadline"/>
+                            <field name="crm_update_deadline"/>
+                            <field name="is_overdue"/>
+                            <field name="is_crm_update_late"/>
+                            <field name="workflow_generated"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Nội dung CSKH">
+                            <group>
+                                <field name="content"/>
+                                <field name="result"/>
+                                <field name="customer_need"/>
+                            </group>
+                        </page>
+
+                        <!-- CUSTOM THÊM MỚI -->
+                        <!-- Tab nhập thông tin sản xuất và đơn hàng dự kiến -->
+                        <page string="Thông tin sản xuất">
+                            <group>
+                                <field name="product_category"/>
+                                <field name="design_sample"/>
+                                <field name="material_info"/>
+                                <field name="technical_requirement"/>
+                                <field name="expected_order_qty"/>
+                                <field name="delivery_terms"/>
+                            </group>
+                        </page>
+
+                        <page string="Chăm sóc tiếp">
+                            <group>
+                                <field name="next_action"/>
+                                <field name="followup_deadline"/>
+                            </group>
+                        </page>
+
+                        <!-- CUSTOM THÊM MỚI -->
+                        <!-- Tab hiển thị email đã đồng bộ từ Gmail/Incoming Mail Server -->
+                        <page string="Đồng bộ email" invisible="1">
+                            <group>
+                                <field name="email_subject"/>
+                                <field name="email_from"/>
+                                <field name="email_date"/>
+                                <field name="gmail_message_id"/>
+                            </group>
+                        </page>
+
+                        <!-- CUSTOM THÊM MỚI -->
+                        <!-- Tab hiển thị thông tin quy trình tự động của Hồ sơ CSKH -->
+                        <page string="Quy trình" invisible="1">
+                            <group>
+                                <field name="workflow_generated"/>
+                                <field name="workflow_stage_id"/>
+                                <field name="followup_activity_id"/>
+                                <field name="workflow_email_sent"/>
+                            </group>
+                        </page>
+
+                        <!-- CUSTOM THÊM MỚI -->
+                        <!-- Tab hiển thị lịch sử thay đổi dữ liệu Hồ sơ CSKH -->
+                        <page string="Lưu vết thay đổi" invisible="1">
+                            <field name="audit_log_ids">
+                                <tree>
+                                    <field name="create_date"/>
+                                    <field name="user_id"/>
+                                    <field name="action"/>
+                                    <field name="field_name"/>
+                                    <field name="old_value"/>
+                                    <field name="new_value"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+
+                <!-- KẾ THỪA MODULE MAIL -->
+                <!-- Chatter của mail.thread -->
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- CUSTOM THÊM MỚI -->
+    <!-- Action mở danh sách Hồ sơ CSKH -->
+    <record id="action_crm_cskh_profile" model="ir.actions.act_window">
+        <field name="name">Hồ sơ CSKH</field>
+        <field name="res_model">crm.cskh.profile</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="website_crm_vinatex_page" name="Website VINATEX CRM">
+        <t t-call="website.layout">
+            <t t-set="head">
+                <title>VINATEX CRM</title>
+            </t>
+
+            <div id="website-crm-vinatex" class="wv-page">
+                <aside class="wv-sidebar">
+                    <a class="wv-logo" href="#tong-quan" data-panel-target="tong-quan" aria-label="VINATEX CRM">
+                        <img src="/crm_tong_hop/static/src/img/vinatex_logo.svg" alt="VINATEX"/>
+                        <span>
+                            <strong>VINATEX CRM</strong>
+                            <small>Cổng khách hàng</small>
+                        </span>
+                    </a>
+
+                    <nav class="wv-menu" aria-label="Chức năng CRM">
+                        <button class="wv-menu-item active" type="button" data-panel-target="tong-quan"><span>⌂</span>Tổng quan</button>
+                        <button class="wv-menu-item" type="button" data-panel-target="lead"><span>□</span>Quản lý Lead</button>
+                        <button class="wv-menu-item" type="button" data-panel-target="cskh"><span>◇</span>Hồ sơ CSKH</button>
+                        <button class="wv-menu-item" type="button" data-panel-target="campaign"><span>✉</span>Chiến dịch &amp; Loyalty</button>
+                        <button class="wv-menu-item" type="button" data-panel-target="khieu-nai"><span>⚑</span>Khiếu nại &amp; dịch vụ</button>
+                        <button class="wv-menu-item" type="button" data-panel-target="phan-tich"><span>▥</span>Phân tích</button>
+                        <button class="wv-menu-item" type="button" data-panel-target="kiem-soat"><span>☑</span>Kiểm soát dữ liệu</button>
+                    </nav>
+
+                    <div class="wv-side-card">
+                        <p>Nâng tầm chăm sóc</p>
+                        <strong>Cá nhân hóa trải nghiệm, gia tăng giá trị khách hàng</strong>
+                    </div>
+                </aside>
+
+                <main class="wv-main">
+                    <header class="wv-topbar">
+                        <button class="wv-icon-button" type="button" aria-label="Menu">☰</button>
+                        <h1>Nền tảng khách hàng VINATEX</h1>
+                        <div class="wv-search" role="search">
+                            <i class="fa fa-search" aria-hidden="true"/>
+                            <input type="search" data-crm-search="1" placeholder="Tìm kiếm lead, khách hàng, campaign..." aria-label="Tìm kiếm lead, khách hàng, campaign"/>
+                            <button type="button" data-search-clear="1" aria-label="Xóa tìm kiếm" hidden="hidden">×</button>
+                            <span data-search-status="1" aria-live="polite"/>
+                        </div>
+                        <a class="wv-company" href="/web">
+                            <img src="/crm_tong_hop/static/src/img/vinatex_logo.svg" alt="VINATEX"/>
+                            <span>VINATEX</span>
+                        </a>
+                    </header>
+
+                    <div t-if="success" class="wv-alert">
+                        <strong>Đã lưu dữ liệu.</strong>
+                        <span t-if="success == 'lead'">Lead mới đã được tạo trong CRM.</span>
+                        <span t-if="success == 'cskh'">Hồ sơ CSKH đã được ghi nhận và liên kết với Lead.</span>
+                        <span t-if="success == 'campaign'">Chiến dịch đã được tạo và nạp danh sách khách hàng phù hợp.</span>
+                        <span t-if="success == 'complaint'">Phiếu khiếu nại đã được tạo và đồng bộ về CSKH.</span>
+                    </div>
+
+                    <section id="tong-quan" class="wv-panel active" data-panel="tong-quan">
+                        <div class="wv-overview-grid">
+                            <div class="wv-hero">
+                                <div class="wv-hero-copy">
+                                    <p class="wv-eyebrow">Chào mừng đến với VINATEX CRM</p>
+                                    <h2><span>Dữ liệu kết nối</span><span><span class="wv-nowrap">Trải nghiệm</span> <mark>khác biệt</mark></span></h2>
+                                    <p>Quản lý lead, chăm sóc khách hàng, campaign và khiếu nại trên một nền tảng hiện đại, thống nhất và mang dấu ấn VINATEX.</p>
+                                    <div class="wv-hero-actions">
+                                        <button type="button" data-panel-target="lead">Tạo lead mới</button>
+                                        <a href="/web">Truy cập Odoo Backend</a>
+                                    </div>
+                                </div>
+                                <div class="wv-hero-visual">
+                                    <span class="wv-glass wv-glass-a"><b><t t-esc="lead_count"/></b><small>Lead &amp; cơ hội</small></span>
+                                    <span class="wv-glass wv-glass-b"><b>24.5%</b><small>Tỷ lệ thắng</small></span>
+                                    <div class="wv-orbit-card">
+                                        <i></i><i></i><i></i><i></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <aside class="wv-performance">
+                                <div class="wv-ring"><span>78%</span></div>
+                                <h3>Hiệu suất hôm nay</h3>
+                                <p>Mục tiêu ngày</p>
+                                <div class="wv-mini-bars">
+                                    <span style="--w:72%">Lead mới <b>12/15</b></span>
+                                    <span style="--w:90%">Gọi chăm sóc <b>18/20</b></span>
+                                    <span style="--w:80%">Email đã gửi <b>28/35</b></span>
+                                </div>
+                            </aside>
+                        </div>
+
+                        <div class="wv-metrics">
+                            <article><i class="tone-purple">●</i><span>Lead &amp; cơ hội</span><strong><t t-esc="lead_count"/></strong><small>đang hoạt động</small></article>
+                            <article><i class="tone-green">●</i><span>Hồ sơ CSKH</span><strong><t t-esc="cskh_count"/></strong><small>đang theo dõi</small></article>
+                            <article><i class="tone-blue">●</i><span>Chiến dịch chăm sóc</span><strong><t t-esc="campaign_count"/></strong><small>đang vận hành</small></article>
+                            <article><i class="tone-red">●</i><span>Phiếu khiếu nại</span><strong><t t-esc="ticket_count"/></strong><small>cần xử lý</small></article>
+                        </div>
+
+                        <div class="wv-report-grid">
+                            <article class="wv-card">
+                                <div class="wv-panel-heading"><div><p class="wv-eyebrow">Hiệu quả hoạt động</p><h3>Xu hướng chăm sóc khách hàng</h3></div></div>
+                                <div class="wv-line-chart"><i></i><i></i><i></i></div>
+                            </article>
+                            <article class="wv-card">
+                                <div class="wv-panel-heading"><div><p class="wv-eyebrow">Phễu chuyển đổi</p><h3>Lead đến thành công</h3></div></div>
+                                <div class="wv-funnel"><span>Lead mới</span><span>Đã liên hệ</span><span>Đang chăm sóc</span><span>Đàm phán</span><span>Thành công</span></div>
+                            </article>
+                            <article class="wv-card">
+                                <div class="wv-panel-heading"><div><p class="wv-eyebrow">Hoạt động gần đây</p><h3>Cập nhật mới</h3></div></div>
+                                <ul class="wv-list">
+                                    <li t-foreach="recent_leads[:3]" t-as="lead" data-search-item="1"><strong t-esc="lead.partner_name or lead.name"/><span t-esc="lead.initial_product_requirement or lead.description or 'Lead mới từ CRM'"/></li>
+                                </ul>
+                            </article>
+                        </div>
+
+                        <section class="wv-company-story">
+                            <div>
+                                <p class="wv-eyebrow">Về VINATEX</p>
+                                <h2>Nền tảng CRM được thiết kế cho hệ sinh thái dệt may</h2>
+                                <p>VINATEX CRM kết nối dữ liệu bán hàng, chăm sóc khách hàng, chiến dịch email và phản hồi dịch vụ để mỗi điểm chạm khách hàng đều được ghi nhận, theo dõi và cải thiện liên tục.</p>
+                            </div>
+                            <div class="wv-contact-grid">
+                                <article><span>Hotline</span><strong>024 3862 1416</strong></article>
+                                <article><span>Email</span><strong>contact@vinatex.com.vn</strong></article>
+                                <article><span>Trang web</span><strong>vinatex.com.vn</strong></article>
+                                <article><span>Văn phòng</span><strong>Hà Nội, Việt Nam</strong></article>
+                            </div>
+                        </section>
+                    </section>
+
+                    <section id="lead" class="wv-panel" data-panel="lead">
+                        <div class="wv-section-head"><div><p class="wv-eyebrow">Lead &amp; cơ hội</p><h2>Quản lý Lead &amp; cơ hội</h2></div><span>crm.lead</span></div>
+                        <div class="wv-grid-two">
+                            <form class="wv-form" action="/crm-vinatex/lead" method="post">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <h3>Tạo Lead mới</h3>
+                                <div class="wv-form-grid">
+                                    <label>Tên công ty<input name="partner_name" required="required" placeholder="Công ty May Hòa Bình"/></label>
+                                    <label>Người liên hệ<input name="contact_name" required="required" placeholder="Nguyễn Minh Anh"/></label>
+                                    <label>Email<input name="email" type="email" required="required" placeholder="khachhang@example.com"/></label>
+                                    <label>Số điện thoại<input name="phone" required="required" placeholder="0901234567"/></label>
+                                    <label>Trang web<input name="website" placeholder="https://vinatex.com.vn"/></label>
+                                    <label>Doanh thu kỳ vọng<input name="expected_revenue" type="number" step="1000000" placeholder="500000000"/></label>
+                                    <label>Xác suất (%)<input name="probability" type="number" min="0" max="100" placeholder="35"/></label>
+                                    <label>Loại dữ liệu<select name="lead_type"><option value="lead">Lead</option><option value="opportunity">Cơ hội</option></select></label>
+                                </div>
+                                <label>Nhu cầu sản phẩm ban đầu<textarea name="requirement" required="required" placeholder="Vải cotton pha, sản lượng dự kiến 80.000m"></textarea></label>
+                                <label>Ghi chú nội bộ<textarea name="description" placeholder="Thông tin bổ sung về khách hàng, nguồn tiếp cận hoặc yêu cầu đặc biệt"></textarea></label>
+                                <button type="submit">Lưu Lead</button>
+                            </form>
+                            <article class="wv-card">
+                                <h3>Lead gần đây</h3>
+                                <div class="wv-table-wrap">
+                                    <table>
+                                        <thead><tr><th>Khách hàng</th><th>Nhu cầu</th><th>Giai đoạn</th><th>Phụ trách</th></tr></thead>
+                                        <tbody>
+                                            <tr t-foreach="recent_leads" t-as="lead" data-search-item="1">
+                                                <td><strong t-esc="lead.partner_name or lead.name"/><small t-esc="lead.email_from or ''"/></td>
+                                                <td t-esc="lead.initial_product_requirement or lead.description or ''"/>
+                                                <td t-esc="lead.stage_id.name or 'Lead mới'"/>
+                                                <td t-esc="lead.user_id.name or ''"/>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section id="cskh" class="wv-panel" data-panel="cskh">
+                        <div class="wv-section-head"><div><p class="wv-eyebrow">Chăm sóc khách hàng</p><h2>Hồ sơ CSKH</h2></div><span>crm.cskh.profile</span></div>
+                        <div class="wv-grid-two">
+                            <form class="wv-form" action="/crm-vinatex/cskh" method="post">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <h3>Ghi nhận CSKH</h3>
+                                <div class="wv-form-grid">
+                                    <label>Tên khách hàng<input name="customer_name" required="required" placeholder="Công ty Dệt Sao Bắc"/></label>
+                                    <label>Email<input name="email" type="email" required="required" placeholder="cskh@example.com"/></label>
+                                    <label>Số điện thoại<input name="phone" required="required" placeholder="0912345678"/></label>
+                                    <label>Loại tương tác<select name="interaction_type"><option value="call">Cuộc gọi</option><option value="email">Email</option><option value="meeting">Cuộc họp</option><option value="quotation">Báo giá</option><option value="complaint">Khiếu nại</option><option value="note">Ghi chú trao đổi</option></select></label>
+                                    <label>Chủng loại sản phẩm<input name="product_category" placeholder="Vải cotton, denim, sợi..."/></label>
+                                    <label>Mẫu thiết kế<input name="design_sample" placeholder="Mã mẫu / link mẫu"/></label>
+                                    <label>Số lượng dự kiến<input name="expected_order_qty" type="number" step="1" placeholder="80000"/></label>
+                                    <label>Hạn chăm sóc tiếp<input name="followup_deadline" type="date"/></label>
+                                </div>
+                                <label>Nhu cầu khách hàng<textarea name="customer_need" placeholder="Nhu cầu mua hàng, tiêu chuẩn chất lượng, thời gian giao"></textarea></label>
+                                <label>Thông tin nguyên vật liệu<textarea name="material_info" placeholder="Thành phần vải, định lượng, màu sắc, yêu cầu nguồn gốc"></textarea></label>
+                                <label>Yêu cầu kỹ thuật<textarea name="technical_requirement" placeholder="Tiêu chuẩn may, kiểm định, đóng gói, chứng nhận"></textarea></label>
+                                <label>Điều kiện giao hàng<textarea name="delivery_terms" placeholder="Địa điểm, thời gian, điều kiện thanh toán/giao nhận"></textarea></label>
+                                <label>Nội dung chăm sóc<textarea name="content" required="required" placeholder="Gọi xác nhận mẫu vải và điều kiện giao hàng"></textarea></label>
+                                <label>Kết quả làm việc<textarea name="result" placeholder="Khách đã xác nhận mẫu, chờ báo giá"></textarea></label>
+                                <label>Hành động tiếp theo<input name="next_action" placeholder="Gửi mẫu màu và báo giá"/></label>
+                                <button type="submit">Lưu CSKH</button>
+                            </form>
+                            <article class="wv-card">
+                                <h3>CSKH mới ghi nhận</h3>
+                                <ul class="wv-list">
+                                    <li t-foreach="recent_cskh" t-as="item" data-search-item="1"><strong t-esc="item.customer_id.name"/><span t-esc="item.next_action or item.content or ''"/></li>
+                                </ul>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section id="campaign" class="wv-panel" data-panel="campaign">
+                        <div class="wv-section-head"><div><p class="wv-eyebrow">Chiến dịch &amp; Loyalty</p><h2>Chiến dịch email</h2></div><span>custom.mail.campaign</span></div>
+                        <div class="wv-grid-two">
+                            <form class="wv-form" action="/crm-vinatex/campaign" method="post">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <h3>Tạo chiến dịch</h3>
+                                <div class="wv-form-grid">
+                                    <label>Tên chiến dịch<input name="name" required="required" placeholder="Theo dõi khách hàng báo giá tháng 6"/></label>
+                                    <label>Mẫu email có sẵn
+                                        <select name="template_id">
+                                            <option value="">Tạo mẫu mới từ nội dung bên dưới</option>
+                                            <option t-foreach="campaign_templates" t-as="template" t-att-value="template.id" t-esc="template.name"/>
+                                        </select>
+                                    </label>
+                                    <label>Loại nội dung<select name="campaign_template_type"><option value="follow_up">Chăm sóc lại</option><option value="remarketing">Remarketing</option><option value="promotion">Khuyến mãi</option><option value="thank_you">Tri ân khách hàng</option></select></label>
+                                    <label>Tình trạng khách hàng<select name="customer_status"><option value="">Tất cả</option><option value="new">Lead mới</option><option value="contacted">Đã liên hệ</option><option value="quotation">Đã gửi báo giá</option><option value="won">Chốt thành công</option><option value="dormant">Lâu chưa tương tác</option></select></label>
+                                    <label>Nhóm chăm sóc<select name="retention_segment"><option value="">Tất cả</option><option value="active">Đang chăm sóc</option><option value="loyal">Khách hàng thân thiết</option><option value="at_risk">Có nguy cơ rời bỏ</option><option value="dormant">Lâu chưa tương tác</option></select></label>
+                                    <label>Phân khúc<input name="segment" placeholder="VIP, nội địa, xuất khẩu..."/></label>
+                                    <label>Mục tiêu cá nhân hóa<input name="personalization_goal" placeholder="Giữ chân, tái mua, tăng giá trị đơn hàng"/></label>
+                                    <label>Tên mẫu mới<input name="template_name" placeholder="Mẫu chăm sóc khách hàng sau báo giá"/></label>
+                                    <label>Tiêu đề email<input name="email_subject" placeholder="VINATEX - cập nhật báo giá và mẫu sản phẩm"/></label>
+                                </div>
+                                <label>Nội dung email<textarea name="email_body" placeholder="Kính gửi Quý khách,..."></textarea></label>
+                                <label>Email người nhận thủ công<textarea name="manual_recipient_emails" placeholder="khachhang1@example.com, khachhang2@example.com"></textarea></label>
+                                <label class="wv-check"><input name="send_now" type="checkbox" value="1"/> Gửi email ngay sau khi tạo campaign</label>
+                                <div class="wv-form-actions">
+                                    <button type="submit">Lưu chiến dịch</button>
+                                    <button type="submit" name="send_now" value="1">Gửi email ngay</button>
+                                </div>
+                            </form>
+                            <article class="wv-card">
+                                <h3>Chiến dịch mới</h3>
+                                <ul class="wv-list">
+                                    <li t-foreach="recent_campaigns" t-as="campaign" data-search-item="1"><strong t-esc="campaign.name"/><span><t t-esc="campaign.recipient_count"/> người nhận - <t t-esc="campaign.state"/></span></li>
+                                </ul>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section id="khieu-nai" class="wv-panel" data-panel="khieu-nai">
+                        <div class="wv-section-head"><div><p class="wv-eyebrow">Khiếu nại &amp; dịch vụ</p><h2>Phiếu khiếu nại</h2></div><span>crm.service.complaint.ticket</span></div>
+                        <div class="wv-grid-two">
+                            <form class="wv-form" action="/crm-vinatex/complaint" method="post">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <h3>Tạo khiếu nại</h3>
+                                <div class="wv-form-grid">
+                                    <label>Tên khách hàng<input name="customer_name" required="required" placeholder="Nhà may An Phú"/></label>
+                                    <label>Email<input name="email" type="email" required="required" placeholder="khieunai@example.com"/></label>
+                                    <label>Số điện thoại<input name="phone" required="required" placeholder="0987654321"/></label>
+                                    <label>Tiêu đề<input name="title" required="required" placeholder="Lệch màu lô vải"/></label>
+                                    <label>Mức độ<select name="severity"><option value="high">Cao</option><option value="medium" selected="selected">Trung bình</option><option value="low">Thấp</option></select></label>
+                                    <label>Điểm hài lòng<input name="satisfaction_score" type="number" min="0" max="10" placeholder="8"/></label>
+                                </div>
+                                <label>Mô tả<textarea name="description" required="required" placeholder="Khách phản ánh màu thực tế lệch so với mẫu duyệt"></textarea></label>
+                                <label>Nguyên nhân gốc<textarea name="root_cause" placeholder="Thông tin kiểm tra ban đầu"></textarea></label>
+                                <label>Giải pháp đề xuất<textarea name="solution" placeholder="Phương án xử lý, đổi hàng, chiết khấu hoặc kiểm định lại"></textarea></label>
+                                <label>Phản hồi khách hàng<textarea name="customer_feedback" placeholder="Ý kiến hoặc yêu cầu thêm từ khách hàng"></textarea></label>
+                                <button type="submit">Lưu khiếu nại</button>
+                            </form>
+                            <article class="wv-card">
+                                <h3>Khiếu nại mới</h3>
+                                <ul class="wv-list">
+                                    <li t-foreach="recent_tickets" t-as="ticket" data-search-item="1"><strong t-esc="ticket.title"/><span><t t-esc="ticket.customer_id.name"/> - <t t-esc="ticket.state"/></span></li>
+                                </ul>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section id="phan-tich" class="wv-panel" data-panel="phan-tich">
+                        <div class="wv-section-head"><div><p class="wv-eyebrow">Phân tích</p><h2>Tổng quan chỉ số CRM</h2></div><span>Báo cáo tổng hợp</span></div>
+                        <div class="wv-report-grid">
+                            <article class="wv-card"><h3>Phân tích chuyển đổi Lead</h3><div class="wv-bars"><span style="--h:82%"><b>Lead</b></span><span style="--h:61%"><b>CSKH</b></span><span style="--h:44%"><b>Báo giá</b></span><span style="--h:31%"><b>Thành công</b></span></div></article>
+                            <article class="wv-card"><h3>Luồng dữ liệu</h3><div class="wv-flow"><span>Lead</span><i></i><span>CSKH</span><i></i><span>Chiến dịch</span><i></i><span>Khiếu nại</span><i></i><span>Phân tích</span></div></article>
+                        </div>
+                    </section>
+
+                    <section id="kiem-soat" class="wv-panel" data-panel="kiem-soat">
+                        <div class="wv-section-head"><div><p class="wv-eyebrow">Kiểm soát dữ liệu</p><h2>Lead nghi trùng, thiếu dữ liệu và phê duyệt</h2></div></div>
+                        <div class="wv-report-grid">
+                            <article class="wv-card"><h3>Phê duyệt dữ liệu</h3><p>Quy trình phê duyệt merge hoặc xóa lead được giữ nguyên trong backend VINATEX CRM.</p></article>
+                            <article class="wv-card"><h3>Lead nghi trùng</h3><p>Theo dõi các khách hàng có email, số điện thoại hoặc thông tin gần giống nhau.</p></article>
+                            <article class="wv-card"><h3>Lead thiếu dữ liệu</h3><p>Nhắc nhân viên cập nhật đầy đủ công ty, người liên hệ, nguồn lead và nhu cầu sản phẩm ban đầu.</p></article>
+                        </div>
+                    </section>
+                </main>
+            </div>
+        </t>
+    </template>
+</odoo>

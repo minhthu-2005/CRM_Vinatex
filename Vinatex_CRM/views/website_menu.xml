@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="menu_website_crm_vinatex" model="website.menu">
+        <field name="name">VINATEX CRM</field>
+        <field name="url">/crm-vinatex</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">30</field>
+    </record>
+</odoo>

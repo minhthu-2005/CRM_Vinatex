@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_tree_personalization" model="ir.ui.view">
+        <field name="name">res.partner.tree.personalization</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <tree string="Khách hàng cá nhân hóa">
+                <field name="name" string="Khách hàng"/>
+                <field name="phone" string="Điện thoại"/>
+                <field name="email" string="Email"/>
+                <field name="loyalty_tier" string="Xếp hạng" widget="badge"
+                       decoration-success="loyalty_tier == 'vip'"
+                       decoration-info="loyalty_tier == 'gold'"
+                       decoration-warning="loyalty_tier == 'silver'"
+                       decoration-muted="loyalty_tier == 'standard'"/>
+                <field name="loyalty_score" string="Điểm loyalty" widget="badge" class="o_vinatex_score_badge"
+                       decoration-success="loyalty_score &gt;= 80"
+                       decoration-info="loyalty_score &gt;= 60 and loyalty_score &lt; 80"
+                       decoration-warning="loyalty_score &gt;= 35 and loyalty_score &lt; 60"
+                       decoration-muted="loyalty_score &lt; 35"/>
+                <field name="retention_segment" string="Nhóm chăm sóc"/>
+                <field name="customer_status" string="Tình trạng"/>
+                <field name="last_interaction_date" string="Tương tác gần nhất"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_partner_form_personalization" model="ir.ui.view">
+        <field name="name">res.partner.form.personalization</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" eval="False"/>
+        <field name="arch" type="xml">
+            <form string="Khách hàng cá nhân hóa">
+                <header>
+                    <button name="action_open_loyalty_rules"
+                            type="object"
+                            string="Xem quy định chấm điểm"
+                            class="btn-primary"/>
+                </header>
+                <sheet>
+                    <field name="image_1920" widget="image" class="oe_avatar"/>
+                    <field name="type" invisible="1"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="VD: Công ty May ABC"/>
+                        </h1>
+                    </div>
+                    <group string="Thông tin khách hàng">
+                        <group>
+                            <field name="function" string="Chức vụ" placeholder="VD: Trưởng phòng mua hàng"/>
+                            <field name="phone" string="Điện thoại"/>
+                            <field name="email" string="Email"/>
+                        </group>
+                        <group>
+                            <field name="street" string="Địa chỉ" placeholder="VD: 25 Trần Phú, Đà Nẵng"/>
+                            <field name="website" string="Trang web"/>
+                            <field name="category_id" string="Thẻ" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Dữ liệu CRM">
+                            <group>
+                                <group string="Dữ liệu dùng để chấm điểm">
+                                    <field name="segment" string="Nhóm khách hàng"/>
+                                    <field name="customer_status" string="Tình trạng khách hàng"/>
+                                    <field name="potential_level" string="Mức độ tiềm năng"/>
+                                    <field name="lead_source_id" string="Nguồn lead"/>
+                                    <field name="crm_estimated_revenue" string="Giá trị CRM dự kiến"/>
+                                    <field name="interaction_count" string="Số lần tương tác CRM" readonly="1"/>
+                                    <field name="last_interaction_date" string="Lần tương tác gần nhất" readonly="1"/>
+                                    <field name="complaint_count" string="Số khiếu nại"/>
+                                </group>
+                                <group string="Kết quả loyalty và chăm sóc">
+                                    <div class="alert alert-info" colspan="2" role="alert">
+                                        <strong>Quy định chấm điểm loyalty</strong>
+                                        <button name="action_open_loyalty_rules"
+                                                type="object"
+                                                string="Xem quy định"
+                                                class="btn btn-primary ms-3"/>
+                                    </div>
+                                    <field name="loyalty_tier" string="Xếp hạng" readonly="1" widget="badge"
+                                           decoration-success="loyalty_tier == 'vip'"
+                                           decoration-info="loyalty_tier == 'gold'"
+                                           decoration-warning="loyalty_tier == 'silver'"
+                                           decoration-muted="loyalty_tier == 'standard'"/>
+                                    <field name="loyalty_score" string="Điểm loyalty" readonly="1" widget="badge" class="o_vinatex_score_badge"
+                                           decoration-success="loyalty_score &gt;= 80"
+                                           decoration-info="loyalty_score &gt;= 60 and loyalty_score &lt; 80"
+                                           decoration-warning="loyalty_score &gt;= 35 and loyalty_score &lt; 60"
+                                           decoration-muted="loyalty_score &lt; 35"/>
+                                    <field name="retention_segment" string="Nhóm chăm sóc" readonly="1"/>
+                                    <div class="alert alert-info" colspan="2" role="alert">
+                                        <strong>Quy định chính sách chăm sóc</strong>
+                                        <button name="action_open_care_policy_rules"
+                                                type="object"
+                                                string="Xem quy định"
+                                                class="btn btn-primary ms-3"/>
+                                    </div>
+                                    <field name="preferred_offer" string="Chính sách chăm sóc ưu tiên"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Ghi chú cá nhân hóa">
+                            <field name="personalization_note" string="Ghi chú cá nhân hóa" nolabel="1"/>
+                        </page>
+                        <page string="Ghi chú nội bộ">
+                            <field name="comment" string="Ghi chú nội bộ" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+</odoo>

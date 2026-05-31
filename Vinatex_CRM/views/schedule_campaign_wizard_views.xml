@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_schedule_campaign_wizard_form" model="ir.ui.view">
+        <field name="name">schedule.campaign.wizard.form</field>
+        <field name="model">schedule.campaign.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Lên lịch gửi chiến dịch">
+                <group>
+                    <field name="campaign_id" readonly="1"/>
+                    <field name="scheduled_date"/>
+                </group>
+                <footer>
+                    <button name="action_confirm_schedule" string="Xác nhận" type="object" class="btn-primary"/>
+                    <button string="Hủy" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

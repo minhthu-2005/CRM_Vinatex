@@ -1,0 +1,270 @@
+.o_web_client .o_action_manager {
+  --vtx-navy: #061947;
+  --vtx-blue: #075fb4;
+  --vtx-cyan: #19c9e8;
+  --vtx-line: #dce6f2;
+}
+
+.o_web_client .o_action_manager .o_control_panel {
+  background: linear-gradient(180deg, #f7fbff 0%, #eef5fb 100%);
+  border-bottom: 1px solid var(--vtx-line);
+}
+
+.o_web_client .o_action_manager .breadcrumb-item,
+.o_web_client .o_action_manager .o_last_breadcrumb_item {
+  color: var(--vtx-navy);
+  font-weight: 800;
+}
+
+.o_web_client .o_action_manager .o_content {
+  background:
+    radial-gradient(circle at 16% 0%, rgba(25, 201, 232, 0.10), transparent 28%),
+    linear-gradient(180deg, #f4f8fc 0%, #eef4fa 100%);
+}
+
+.o_web_client .o_action_manager .o_list_renderer,
+.o_web_client .o_action_manager .o_kanban_renderer,
+.o_web_client .o_action_manager .o_form_view .o_form_sheet_bg {
+  background: transparent;
+}
+
+.o_web_client .o_action_manager .o_list_table,
+.o_web_client .o_action_manager .o_form_view .o_form_sheet,
+.o_web_client .o_action_manager .o_kanban_record,
+.o_web_client .o_action_manager .o_kanban_group {
+  border: 1px solid var(--vtx-line);
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(6, 25, 71, 0.06);
+}
+
+.o_web_client .o_action_manager .o_list_table thead th {
+  color: var(--vtx-navy);
+  background: #edf5fc;
+  font-weight: 800;
+}
+
+.o_web_client .o_action_manager .o_data_row:hover {
+  background: #f4fbff !important;
+}
+
+.o_web_client .o_action_manager .o_form_view .o_form_sheet {
+  max-width: 1320px;
+  padding: 28px;
+  background: #fff;
+}
+
+.o_web_client .o_action_manager .o_form_view .oe_title h1,
+.o_web_client .o_action_manager .o_form_view .oe_title input {
+  color: var(--vtx-navy);
+  font-weight: 900;
+}
+
+.o_web_client .o_action_manager .nav-tabs {
+  gap: 6px;
+  border-bottom: 1px solid var(--vtx-line);
+}
+
+.o_web_client .o_action_manager .nav-tabs .nav-link {
+  color: #51627a;
+  border-radius: 10px 10px 0 0;
+  font-weight: 800;
+}
+
+.o_web_client .o_action_manager .nav-tabs .nav-link.active {
+  color: var(--vtx-blue);
+  background: #eef8ff;
+  border-color: var(--vtx-line);
+}
+
+.o_web_client .o_action_manager .btn-primary {
+  background: linear-gradient(135deg, var(--vtx-blue), var(--vtx-cyan));
+  border-color: transparent;
+  font-weight: 800;
+}
+
+.o_web_client .o_action_manager .badge,
+.o_web_client .o_action_manager .o_field_badge {
+  border-radius: 999px;
+  font-weight: 800;
+}
+
+.o_web_client .o_action_manager .o_cskh_profile_list {
+  table-layout: fixed;
+  min-width: 1450px;
+}
+
+.o_web_client .o_action_manager .o_cskh_profile_list th,
+.o_web_client .o_action_manager .o_cskh_profile_list td {
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.o_web_client .o_action_manager .o_cskh_profile_list th[data-name="name"],
+.o_web_client .o_action_manager .o_cskh_profile_list td[name="name"] {
+  min-width: 115px;
+  width: 115px;
+}
+
+.o_web_client .o_action_manager .o_cskh_profile_list th[data-name="customer_id"],
+.o_web_client .o_action_manager .o_cskh_profile_list td[name="customer_id"] {
+  min-width: 180px;
+  width: 185px;
+}
+
+.o_web_client .o_action_manager .o_cskh_profile_list th[data-name="lead_id"],
+.o_web_client .o_action_manager .o_cskh_profile_list td[name="lead_id"] {
+  min-width: 230px;
+  width: 245px;
+}
+
+.o_web_client .o_action_manager .o_cskh_profile_list th[data-name="interaction_type"],
+.o_web_client .o_action_manager .o_cskh_profile_list td[name="interaction_type"] {
+  min-width: 125px;
+  width: 130px;
+}
+
+.o_web_client .o_action_manager .o_cskh_profile_list th[data-name="interaction_date"],
+.o_web_client .o_action_manager .o_cskh_profile_list td[name="interaction_date"] {
+  min-width: 145px;
+  width: 150px;
+}
+
+.o_web_client .o_action_manager .o_cskh_profile_list th[data-name="user_id"],
+.o_web_client .o_action_manager .o_cskh_profile_list td[name="user_id"] {
+  min-width: 160px;
+  width: 170px;
+}
+
+.o_web_client .o_action_manager .o_cskh_profile_list th[data-name="product_category"],
+.o_web_client .o_action_manager .o_cskh_profile_list td[name="product_category"] {
+  min-width: 140px;
+  width: 150px;
+}
+
+.o_web_client .o_action_manager .o_cskh_profile_list th[data-name="expected_order_qty"],
+.o_web_client .o_action_manager .o_cskh_profile_list td[name="expected_order_qty"] {
+  min-width: 125px;
+  width: 130px;
+  text-align: right;
+}
+
+.o_web_client .o_action_manager .o_cskh_profile_list th[data-name="followup_deadline"],
+.o_web_client .o_action_manager .o_cskh_profile_list td[name="followup_deadline"] {
+  min-width: 130px;
+  width: 135px;
+}
+
+.o_web_client .o_action_manager .o_cskh_profile_list th[data-name="state"],
+.o_web_client .o_action_manager .o_cskh_profile_list td[name="state"] {
+  min-width: 135px;
+  width: 140px;
+  text-align: center;
+}
+
+.o_web_client .o_action_manager .o_cskh_profile_list td[name="state"] .badge,
+.o_web_client .o_action_manager .o_cskh_profile_list td[name="state"] .o_field_badge {
+  min-width: 112px;
+  justify-content: center;
+  padding: 5px 12px;
+  font-size: 12px;
+  line-height: 1.15;
+}
+
+.o_web_client .o_action_manager .o_vtx_complaint_kanban .o_kanban_record {
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.o_web_client .o_action_manager .o_vtx_complaint_kanban .o_kanban_group {
+  width: 420px;
+  max-width: 420px;
+}
+
+.o_web_client .o_action_manager .o_vtx_complaint_card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  min-width: 0;
+  padding: 14px 16px 12px;
+  color: #0b1b3d;
+  background: #fff;
+  border-radius: 12px;
+}
+
+.o_web_client .o_action_manager .o_vtx_complaint_top,
+.o_web_client .o_action_manager .o_vtx_complaint_footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 0;
+}
+
+.o_web_client .o_action_manager .o_vtx_complaint_code {
+  color: #6d5cae;
+  font-weight: 900;
+}
+
+.o_web_client .o_action_manager .o_vtx_complaint_title {
+  color: #101828;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.35;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.o_web_client .o_action_manager .o_vtx_complaint_customer,
+.o_web_client .o_action_manager .o_vtx_complaint_footer {
+  color: #667085;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.o_web_client .o_action_manager .o_vtx_complaint_customer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.o_web_client .o_action_manager .o_vtx_complaint_customer span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.o_web_client .o_action_manager .o_vtx_complaint_meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.o_web_client .o_action_manager .o_vtx_complaint_meta .badge,
+.o_web_client .o_action_manager .o_vtx_complaint_top .badge {
+  padding: 5px 10px;
+  line-height: 1.1;
+}
+
+.o_web_client .o_action_manager .o_vtx_user_badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 220px;
+  color: #111827;
+  background: #fff;
+  border: 1px solid #6d5cae;
+}
+
+.o_web_client .o_action_manager .o_vtx_user_badge span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

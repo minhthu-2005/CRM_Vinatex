@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_crm_sales_performance_tree" model="ir.ui.view">
+        <field name="name">crm.sales.performance.list</field>
+        <field name="model">crm.sales.performance</field>
+        <field name="arch" type="xml">
+            <tree string="Phân tích hiệu suất kinh doanh" create="false" edit="false" delete="false">
+                <field name="salesperson_id"/>
+                <field name="total_leads" sum="Tổng Lead"/>
+                <field name="won_leads" sum="Lead thành công"/>
+                <field name="lost_leads" sum="Lead thất bại"/>
+                <field name="total_revenue" sum="Tổng doanh thu"/>
+                <field name="conversion_rate" avg="Tỷ lệ chuyển đổi TB"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_crm_sales_performance_graph" model="ir.ui.view">
+        <field name="name">crm.sales.performance.graph</field>
+        <field name="model">crm.sales.performance</field>
+        <field name="arch" type="xml">
+            <graph string="Phân tích hiệu suất kinh doanh" type="bar">
+                <field name="salesperson_id"/>
+                <field name="total_revenue" type="measure"/>
+                <field name="total_leads" type="measure"/>
+                <field name="won_leads" type="measure"/>
+                <field name="lost_leads" type="measure"/>
+                <field name="conversion_rate" type="measure"/>
+            </graph>
+        </field>
+    </record>
+    <record id="action_crm_sales_performance" model="ir.actions.act_window">
+        <field name="name">Phân tích hiệu suất kinh doanh</field>
+        <field name="res_model">crm.sales.performance</field>
+        <field name="view_mode">tree,graph</field>
+    </record>
+</odoo>
+

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- CUSTOM THÊM MỚI -->
+    <!-- Sequence sinh mã Hồ sơ CSKH tự động -->
+    <record id="seq_crm_cskh_profile" model="ir.sequence">
+        <field name="name">Hồ sơ CSKH</field>
+        <field name="code">crm.cskh.profile</field>
+        <field name="prefix">CSKH/</field>
+        <field name="padding">4</field>
+    </record>
+
+</odoo>

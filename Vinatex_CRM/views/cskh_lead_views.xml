@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_crm_lead_cskh_quick_form" model="ir.ui.view">
+        <field name="name">crm.lead.cskh.quick.form</field>
+        <field name="model">crm.lead</field>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <form string="Tạo Cơ hội">
+                <sheet>
+                    <group>
+                        <field name="company_id" invisible="1"/>
+                        <field name="team_id" invisible="1"/>
+                        <field name="name" string="Cơ hội" required="1"/>
+                        <field name="partner_id" string="Khách hàng" required="1"/>
+                        <field name="contact_name" string="Người liên hệ chính"/>
+                        <field name="email_from" string="Email"/>
+                        <field name="phone" string="Điện thoại"/>
+                        <field name="user_id" string="Nhân viên phụ trách"/>
+                        <field name="stage_id" string="Giai đoạn"/>
+                        <field name="expected_revenue" string="Doanh thu kỳ vọng"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button special="save" string="Lưu" class="btn-primary"/>
+                    <button special="cancel" string="Hủy bỏ" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- KẾ THỪA MODULE CRM -->
+    <!-- View crm.crm_lead_view_form -->
+    <record id="crm_lead_form_inherit_cskh_profile" model="ir.ui.view">
+        <field name="name">crm.lead.form.inherit.cskh.profile</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+
+            <!-- CUSTOM THÊM MỚI -->
+            <!-- Thêm tab Hồ sơ CSKH vào form khách hàng tiềm năng/cơ hội -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Hồ sơ CSKH">
+                    <field name="cskh_profile_ids">
+                        <tree editable="bottom">
+                            <field name="interaction_type"/>
+                            <field name="interaction_date"/>
+                            <field name="content"/>
+                            <field name="result"/>
+                            <field name="customer_need"/>
+                            <field name="product_category"/>
+                            <field name="expected_order_qty"/>
+                            <field name="next_action"/>
+                            <field name="followup_deadline"/>
+                            <field name="state"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>
