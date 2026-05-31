@@ -1,6 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_crm_analytics_kpi,access_crm_analytics_kpi,model_crm_analytics_kpi,base.group_user,1,0,0,0
-access_crm_conversion_report,access_crm_conversion_report,model_crm_conversion_report,base.group_user,1,0,0,0
-access_crm_sales_performance,access_crm_sales_performance,model_crm_sales_performance,base.group_user,1,0,0,0
-access_crm_customer_retention_analytics,access_crm_customer_retention_analytics,model_crm_customer_retention_analytics,base.group_user,1,1,1,0
-access_crm_lost_reason_analytics,access_crm_lost_reason_analytics,model_crm_lost_reason_analytics,base.group_user,1,1,1,0
