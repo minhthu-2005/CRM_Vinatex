@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_complaint_by_severity" model="ir.actions.act_window">
+        <field name="name">Khiếu nại theo mức ưu tiên</field>
+        <field name="res_model">crm.service.complaint.ticket</field>
+        <field name="view_mode">graph,pivot,list</field>
+        <field name="context">{'group_by': 'severity'}</field>
+    </record>
+
+    <record id="action_complaint_by_state" model="ir.actions.act_window">
+        <field name="name">Khiếu nại theo trạng thái</field>
+        <field name="res_model">crm.service.complaint.ticket</field>
+        <field name="view_mode">graph,pivot,list</field>
+        <field name="context">{'group_by': 'state'}</field>
+    </record>
+
+    <record id="action_complaint_sla_late" model="ir.actions.act_window">
+        <field name="name">Khiếu nại trễ SLA</field>
+        <field name="res_model">crm.service.complaint.ticket</field>
+        <field name="view_mode">list,graph,pivot,form</field>
+        <field name="domain">[('sla_status', '=', 'late')]</field>
+        <field name="context">{'group_by': 'sale_user_id'}</field>
+    </record>
+
+    <record id="action_customer_satisfaction" model="ir.actions.act_window">
+        <field name="name">Mức độ hài lòng khách hàng</field>
+        <field name="res_model">crm.service.feedback.request</field>
+        <field name="view_mode">pivot,graph,list,form</field>
+        <field name="domain">[('state', '=', 'answered')]</field>
+        <field name="context">{'group_by': 'satisfaction_level'}</field>
+    </record>
+
+    <record id="action_crm_kpi_leads" model="ir.actions.act_window">
+        <field name="name">Bảng chỉ số CRM</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">graph,pivot,list,form</field>
+        <field name="context">{'group_by': 'user_id'}</field>
+    </record>
+
+    <record id="action_fail_reason_analysis" model="ir.actions.act_window">
+        <field name="name">Phân tích lý do thất bại</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">pivot,graph,list,form</field>
+        <field name="domain">[('fail_reason', '!=', False)]</field>
+        <field name="context">{'group_by': 'fail_reason'}</field>
+    </record>
+</odoo>

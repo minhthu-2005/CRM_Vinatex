@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rule_complaint_ticket_portal_own" model="ir.rule">
+        <field name="name">Portal users can access their complaint tickets</field>
+        <field name="model_id" ref="model_crm_service_complaint_ticket"/>
+        <field name="domain_force">[('customer_id', 'child_of', [user.partner_id.commercial_partner_id.id])]</field>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+    </record>
+
+    <record id="rule_feedback_request_portal_own" model="ir.rule">
+        <field name="name">Portal users can access their feedback requests</field>
+        <field name="model_id" ref="model_crm_service_feedback_request"/>
+        <field name="domain_force">[('partner_id', 'child_of', [user.partner_id.commercial_partner_id.id])]</field>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+    </record>
+
+    <record id="rule_feedback_answer_portal_own" model="ir.rule">
+        <field name="name">Portal users can access their feedback answers</field>
+        <field name="model_id" ref="model_crm_service_feedback_answer"/>
+        <field name="domain_force">[('request_id.partner_id', 'child_of', [user.partner_id.commercial_partner_id.id])]</field>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+    </record>
+</odoo>

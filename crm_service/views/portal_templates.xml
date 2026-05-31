@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_my_home_customer_service" inherit_id="portal.portal_my_home" name="Mục cổng thông tin dịch vụ khách hàng" priority="40">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Phản hồi</t>
+                <t t-set="url" t-value="'/my/feedback'"/>
+                <t t-set="text">Xem và gửi biểu mẫu phản hồi khách hàng.</t>
+                <t t-set="placeholder_count" t-value="'feedback_count'"/>
+            </t>
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Khiếu nại</t>
+                <t t-set="url" t-value="'/my/complaints'"/>
+                <t t-set="text">Tạo và theo dõi phiếu khiếu nại.</t>
+                <t t-set="placeholder_count" t-value="'complaint_count'"/>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="portal_my_feedback_requests" name="Yêu cầu phản hồi của tôi">
+        <t t-call="portal.portal_layout">
+            <div class="container py-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="mb-0">Phản hồi</h3>
+                </div>
+                <t t-if="feedback_requests">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Mã</th>
+                                    <th>Biểu mẫu</th>
+                                    <th>Trạng thái</th>
+                                    <th>Đã gửi</th>
+                                    <th>Đã phản hồi</th>
+                                    <th class="text-end">Điểm</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="feedback_requests" t-as="feedback">
+                                    <td>
+                                        <a t-att-href="'/my/feedback/%s' % feedback.id" t-out="feedback.name"/>
+                                    </td>
+                                    <td t-out="feedback.form_id.name"/>
+                                    <td>
+                                        <span class="badge text-bg-secondary" t-if="feedback.state == 'draft'">Nháp</span>
+                                        <span class="badge text-bg-info" t-elif="feedback.state == 'sent'">Đã gửi</span>
+                                        <span class="badge text-bg-success" t-elif="feedback.state == 'answered'">Đã phản hồi</span>
+                                        <span class="badge text-bg-secondary" t-else="">Đã hủy</span>
+                                    </td>
+                                    <td>
+                                        <span t-if="feedback.sent_date" t-field="feedback.sent_date"/>
+                                    </td>
+                                    <td>
+                                        <span t-if="feedback.answered_date" t-field="feedback.answered_date"/>
+                                    </td>
+                                    <td class="text-end">
+                                        <span t-if="feedback.average_score" t-out="'%.2f' % feedback.average_score"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <t t-call="portal.pager"/>
+                </t>
+                <div t-else="" class="alert alert-light border">
+                    Chưa có yêu cầu phản hồi nào.
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="portal_feedback_request" name="Yêu cầu phản hồi">
+        <t t-call="portal.portal_layout">
+            <div class="container py-4">
+                <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+                    <div>
+                        <a href="/my/feedback" class="text-decoration-none small">Phản hồi</a>
+                        <h3 class="mb-1" t-out="feedback_request.form_id.name"/>
+                        <p class="text-muted mb-0" t-if="feedback_request.form_id.description" t-out="feedback_request.form_id.description"/>
+                    </div>
+                    <span class="badge text-bg-danger" t-if="feedback_request.is_negative">Tiêu cực</span>
+                </div>
+
+                <div t-if="submitted" class="alert alert-success">
+                    Phản hồi của bạn đã được gửi.
+                </div>
+                <div t-if="feedback_request.state == 'draft'" class="alert alert-warning">
+                    Biểu mẫu này chưa được gửi cho khách hàng.
+                </div>
+                <div t-if="feedback_request.state == 'answered' and not submitted" class="alert alert-success">
+                    Phản hồi này đã được ghi nhận.
+                </div>
+                <div t-if="feedback_request.state == 'cancelled'" class="alert alert-secondary">
+                    Yêu cầu phản hồi này đã bị hủy.
+                </div>
+                <div t-if="error" class="alert alert-danger" t-out="error"/>
+
+                <form method="post" class="vstack gap-3">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <div t-foreach="feedback_request.line_ids" t-as="line" class="border rounded p-3">
+                        <label class="form-label fw-semibold">
+                            <span t-out="line.question_id.name"/>
+                            <span class="text-danger" t-if="line.required">*</span>
+                        </label>
+                        <p class="text-muted small mb-2" t-if="line.question_id.description" t-out="line.question_id.description"/>
+
+                        <input
+                            t-if="line.question_type in ('rating', 'satisfaction')"
+                            type="number"
+                            class="form-control"
+                            min="1"
+                            t-att-max="line.max_score"
+                            t-att-name="'rating_%s' % line.id"
+                            t-att-value="line.rating_value or ''"
+                            t-att-required="line.required and 'required' or None"
+                            t-att-disabled="feedback_request.state != 'sent' and 'disabled' or None"
+                        />
+
+                        <select
+                            t-elif="line.question_type == 'boolean'"
+                            class="form-select"
+                            t-att-name="'boolean_%s' % line.id"
+                            t-att-required="line.required and 'required' or None"
+                            t-att-disabled="feedback_request.state != 'sent' and 'disabled' or None"
+                        >
+                            <option value="">Chọn câu trả lời</option>
+                            <option value="yes" t-att-selected="line.boolean_value == 'yes' and 'selected' or None">Có</option>
+                            <option value="no" t-att-selected="line.boolean_value == 'no' and 'selected' or None">Không</option>
+                        </select>
+
+                        <textarea
+                            t-else=""
+                            class="form-control"
+                            rows="4"
+                            t-att-name="'text_%s' % line.id"
+                            t-att-required="line.required and 'required' or None"
+                            t-att-disabled="feedback_request.state != 'sent' and 'disabled' or None"
+                        ><t t-out="line.text_value or ''"/></textarea>
+                    </div>
+
+                    <div class="border rounded p-3">
+                        <label class="form-label fw-semibold">Ý kiến bổ sung</label>
+                        <textarea
+                            class="form-control"
+                            rows="4"
+                            name="additional_note"
+                            t-att-disabled="feedback_request.state != 'sent' and 'disabled' or None"
+                        ><t t-out="feedback_request.additional_note or ''"/></textarea>
+                    </div>
+
+                    <div t-if="feedback_request.staff_reply" class="border rounded p-3 bg-light">
+                        <div class="d-flex justify-content-between align-items-start gap-3">
+                            <div>
+                                <h6 class="mb-2" t-out="feedback_request.staff_reply_subject or 'Trả lời từ Thục Linh'"/>
+                                <p class="mb-0" style="white-space: pre-line;" t-out="feedback_request.staff_reply"/>
+                            </div>
+                            <span class="text-muted small" t-if="feedback_request.staff_reply_sent_date" t-field="feedback_request.staff_reply_sent_date"/>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-2">
+                        <button t-if="feedback_request.state == 'sent'" type="submit" class="btn btn-primary">
+                            Gửi phản hồi
+                        </button>
+                        <a href="/my/complaints/new" class="btn btn-outline-danger" t-if="feedback_request.is_negative and not feedback_request.complaint_ticket_id">
+                            Tạo khiếu nại
+                        </a>
+                        <a t-if="feedback_request.complaint_ticket_id" t-att-href="'/my/complaints/%s' % feedback_request.complaint_ticket_id.id" class="btn btn-outline-secondary">
+                            Xem khiếu nại
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </t>
+    </template>
+
+    <template id="portal_my_complaints" name="Khiếu nại của tôi">
+        <t t-call="portal.portal_layout">
+            <div class="container py-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="mb-0">Phiếu khiếu nại</h3>
+                    <a href="/my/complaints/new" class="btn btn-primary">Khiếu nại mới</a>
+                </div>
+                <t t-if="tickets">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Phiếu</th>
+                                    <th>Tiêu đề</th>
+                                    <th>Mức ưu tiên</th>
+                                    <th>Trạng thái</th>
+                                    <th>Chứng từ liên quan</th>
+                                    <th>Ngày tạo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="tickets" t-as="ticket">
+                                    <td>
+                                        <a t-att-href="'/my/complaints/%s' % ticket.id" t-out="ticket.name"/>
+                                    </td>
+                                    <td t-out="ticket.title"/>
+                                    <td t-out="ticket.severity"/>
+                                    <td>
+                                        <span class="badge text-bg-secondary" t-if="ticket.state == 'draft'">Mới</span>
+                                        <span class="badge text-bg-info" t-elif="ticket.state == 'open'">Đã tiếp nhận</span>
+                                        <span class="badge text-bg-warning" t-elif="ticket.state == 'processing'">Đang xử lý</span>
+                                        <span class="badge text-bg-success" t-elif="ticket.state == 'resolved'">Đã xử lý</span>
+                                        <span class="badge text-bg-secondary" t-else="">Đã đóng</span>
+                                    </td>
+                                    <td t-out="ticket.related_document_ref or ''"/>
+                                    <td>
+                                        <span t-field="ticket.create_date"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <t t-call="portal.pager"/>
+                </t>
+                <div t-else="" class="alert alert-light border">
+                    Chưa có phiếu khiếu nại nào.
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="portal_complaint_form" name="Biểu mẫu khiếu nại">
+        <t t-call="portal.portal_layout">
+            <div class="container py-4">
+                <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+                    <div>
+                        <a href="/my/complaints" class="text-decoration-none small">Phiếu khiếu nại</a>
+                        <h3 class="mb-1">
+                            <t t-if="ticket" t-out="ticket.name"/>
+                            <t t-else="">Khiếu nại mới</t>
+                        </h3>
+                    </div>
+                    <span t-if="ticket and ticket.state == 'draft'" class="badge text-bg-secondary">Mới</span>
+                    <span t-elif="ticket and ticket.state == 'open'" class="badge text-bg-info">Đã tiếp nhận</span>
+                    <span t-elif="ticket and ticket.state == 'processing'" class="badge text-bg-warning">Đang xử lý</span>
+                    <span t-elif="ticket and ticket.state == 'resolved'" class="badge text-bg-success">Đã xử lý</span>
+                    <span t-elif="ticket" class="badge text-bg-secondary">Đã đóng</span>
+                </div>
+
+                <div t-if="updated" class="alert alert-success">
+                    Khiếu nại của bạn đã được cập nhật.
+                </div>
+                <div t-if="error" class="alert alert-danger" t-out="error"/>
+
+                <form method="post" enctype="multipart/form-data" class="vstack gap-3">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label class="form-label fw-semibold">Tiêu đề</label>
+                            <input
+                                type="text"
+                                name="title"
+                                class="form-control"
+                                required="required"
+                                t-att-value="ticket.title if ticket else ''"
+                                t-att-disabled="ticket and not ticket.customer_can_edit and 'disabled' or None"
+                            />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Mức ưu tiên</label>
+                            <select
+                                name="severity"
+                                class="form-select"
+                                t-att-disabled="ticket and not ticket.customer_can_edit and 'disabled' or None"
+                            >
+                                <option value="low" t-att-selected="ticket and ticket.severity == 'low' and 'selected' or None">Thấp</option>
+                                <option value="medium" t-att-selected="(not ticket or ticket.severity == 'medium') and 'selected' or None">Trung bình</option>
+                                <option value="high" t-att-selected="ticket and ticket.severity == 'high' and 'selected' or None">Cao</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Đơn hàng / Dịch vụ liên quan</label>
+                            <input
+                                type="text"
+                                name="related_document_ref"
+                                class="form-control"
+                                t-att-value="ticket.related_document_ref if ticket else ''"
+                                t-att-disabled="ticket and not ticket.customer_can_edit and 'disabled' or None"
+                            />
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-semibold">Nội dung</label>
+                            <textarea
+                                name="description"
+                                class="form-control"
+                                rows="6"
+                                required="required"
+                                t-att-disabled="ticket and not ticket.customer_can_edit and 'disabled' or None"
+                            ><t t-out="ticket.description if ticket else ''"/></textarea>
+                        </div>
+                        <div class="col-12" t-if="not ticket or ticket.customer_can_edit">
+                            <label class="form-label fw-semibold">Tệp đính kèm</label>
+                            <input type="file" name="attachment" class="form-control" multiple="multiple"/>
+                        </div>
+                    </div>
+
+                    <div t-if="attachments" class="border rounded p-3">
+                        <h6>Tệp đính kèm</h6>
+                        <ul class="mb-0">
+                            <li t-foreach="attachments" t-as="attachment">
+                                <a t-att-href="'/web/content/%s?download=true' % attachment.id" t-out="attachment.name"/>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div t-if="ticket and ticket.solution" class="border rounded p-3">
+                        <h6>Giải pháp xử lý</h6>
+                        <p class="mb-0" t-out="ticket.solution"/>
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-2">
+                        <button t-if="not ticket or ticket.customer_can_edit" type="submit" class="btn btn-primary">
+                            Lưu
+                        </button>
+                        <button t-if="ticket and ticket.customer_can_delete" type="submit" name="delete" value="1" class="btn btn-outline-danger">
+                            Xóa
+                        </button>
+                        <a href="/my/complaints" class="btn btn-outline-secondary">Quay lại</a>
+                    </div>
+                </form>
+            </div>
+        </t>
+    </template>
+</odoo>
