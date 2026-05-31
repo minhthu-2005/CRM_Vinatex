@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_crm_conversion_report_tree" model="ir.ui.view">
+        <field name="name">crm.conversion.report.tree</field>
+        <field name="model">crm.conversion.report</field>
+        <field name="arch" type="xml">
+            <tree string="Phân tích chuyển đổi Lead" create="false" edit="false" delete="false">
+                <field name="salesperson_id"/>
+                <field name="total_leads" sum="Tổng Lead"/>
+                <field name="won_leads" sum="Lead thành công"/>
+                <field name="lost_leads" sum="Lead thất bại"/>
+                <field name="conversion_rate" avg="Tỷ lệ chuyển đổi TB"/>
+                <field name="lost_rate" avg="Tỷ lệ thất bại TB"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_crm_conversion_report_graph" model="ir.ui.view">
+        <field name="name">crm.conversion.report.graph</field>
+        <field name="model">crm.conversion.report</field>
+        <field name="arch" type="xml">
+            <graph string="Phân tích chuyển đổi Lead" type="bar">
+                <field name="salesperson_id"/>
+                <field name="conversion_rate" type="measure"/>
+                <field name="lost_rate" type="measure"/>
+                <field name="total_leads" type="measure"/>
+                <field name="won_leads" type="measure"/>
+                <field name="lost_leads" type="measure"/>
+            </graph>
+        </field>
+    </record>
+    <record id="view_crm_conversion_report_pivot" model="ir.ui.view">
+        <field name="name">crm.conversion.report.pivot</field>
+        <field name="model">crm.conversion.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Phân tích chuyển đổi Lead">
+                <field name="salesperson_id" type="row"/>
+                <field name="total_leads" type="measure"/>
+                <field name="won_leads" type="measure"/>
+                <field name="lost_leads" type="measure"/>
+                <field name="conversion_rate" type="measure"/>
+                <field name="lost_rate" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="action_crm_conversion_report" model="ir.actions.act_window">
+        <field name="name">Phân tích chuyển đổi Lead</field>
+        <field name="res_model">crm.conversion.report</field>
+        <field name="view_mode">tree,graph,pivot</field>
+    </record>
+    <menuitem id="menu_crm_conversion_report" name="Phân tích chuyển đổi Lead" parent="menu_crm_analytics_root" action="action_crm_conversion_report" sequence="2"/>
+</odoo>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rule_crm_analytics_kpi_user" model="ir.rule">
+        <field name="name">Quyền xem Dashboard KPI CRM</field>
+        <field name="model_id" ref="model_crm_analytics_kpi"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    <record id="rule_crm_conversion_report_user" model="ir.rule">
+        <field name="name">Quyền xem phân tích chuyển đổi Lead</field>
+        <field name="model_id" ref="model_crm_conversion_report"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    <record id="rule_crm_sales_performance_user" model="ir.rule">
+        <field name="name">Quyền xem hiệu suất Sales</field>
+        <field name="model_id" ref="model_crm_sales_performance"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    <record id="rule_crm_customer_retention_user" model="ir.rule">
+        <field name="name">Quyền xem khách hàng quay lại</field>
+        <field name="model_id" ref="model_crm_customer_retention_analytics"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    <record id="rule_crm_lost_reason_user" model="ir.rule">
+        <field name="name">Quyền xem Lost Deal</field>
+        <field name="model_id" ref="model_crm_lost_reason_analytics"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+</odoo>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_crm_customer_retention_tree" model="ir.ui.view">
+        <field name="name">crm.customer.retention.analytics.tree</field>
+        <field name="model">crm.customer.retention.analytics</field>
+        <field name="arch" type="xml">
+            <tree string="Phân tích khách hàng quay lại">
+                <field name="customer_id"/>
+                <field name="total_orders" sum="Tổng đơn hàng"/>
+                <field name="total_revenue" sum="Tổng doanh thu"/>
+                <field name="is_returning_customer"/>
+                <field name="retention_status"/>
+                <field name="retention_rate" avg="Tỷ lệ mua lại TB"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_crm_customer_retention_pivot" model="ir.ui.view">
+        <field name="name">crm.customer.retention.analytics.pivot</field>
+        <field name="model">crm.customer.retention.analytics</field>
+        <field name="arch" type="xml">
+            <pivot string="Phân tích khách hàng quay lại">
+                <field name="retention_status" type="row"/>
+                <field name="total_orders" type="measure"/>
+                <field name="total_revenue" type="measure"/>
+                <field name="retention_rate" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_crm_customer_retention_graph" model="ir.ui.view">
+        <field name="name">crm.customer.retention.analytics.graph</field>
+        <field name="model">crm.customer.retention.analytics</field>
+        <field name="arch" type="xml">
+            <graph string="Phân tích khách hàng quay lại" type="pie">
+                <field name="retention_status"/>
+                <field name="total_orders" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_crm_customer_retention" model="ir.actions.act_window">
+        <field name="name">Phân tích khách hàng quay lại</field>
+        <field name="res_model">crm.customer.retention.analytics</field>
+        <field name="view_mode">tree,pivot,graph</field>
+    </record>
+
+    <menuitem id="menu_crm_customer_retention"
+              name="Phân tích khách hàng quay lại"
+              parent="menu_crm_analytics_root"
+              action="action_crm_customer_retention"
+              sequence="4"/>
+</odoo>
