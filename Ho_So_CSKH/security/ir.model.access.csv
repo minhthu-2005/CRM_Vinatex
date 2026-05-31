@@ -1,4 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_crm_cskh_profile,access.crm.cskh.profile,model_crm_cskh_profile,base.group_user,1,1,1,1
-access_crm_cskh_audit_log,access.crm.cskh.audit.log,model_crm_cskh_audit_log,base.group_user,1,0,0,0
-access_crm_cskh_workflow_rule,access.crm.cskh.workflow.rule,model_crm_cskh_workflow_rule,base.group_user,1,1,1,1
