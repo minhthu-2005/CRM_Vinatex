@@ -1,4 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_mail_campaign_user,access.mail.campaign,model_custom_mail_campaign,,1,1,1,1
-access_mail_log_user,access.mail.log,model_custom_mail_log,,1,1,1,0
-access_schedule_campaign_wizard_user,access.schedule.campaign.wizard,model_schedule_campaign_wizard,,1,1,1,1
