@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_crm_lead_transfer_owner_wizard_form" model="ir.ui.view">
+        <field name="name">crm.lead.transfer.owner.wizard.form</field>
+        <field name="model">crm.lead.transfer.owner.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Chuyển nhân viên phụ trách">
+                <group>
+                    <field name="lead_ids" widget="many2many_tags"/>
+                    <field name="new_user_id"/>
+                    <field name="reason"/>
+                </group>
+                <footer>
+                    <button name="action_transfer" string="Chuyển phụ trách" type="object" class="btn-primary"/>
+                    <button string="Hủy" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
