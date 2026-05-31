@@ -1,0 +1,22 @@
+{
+    "name": "Quản lý Lead CRM",
+    "summary": "Quản lý lead, dữ liệu khách hàng, duplicate, approval và archive inactive",
+    "version": "19.0.1.0.0",
+    "category": "Sales/CRM",
+    "author": "TrX",
+    "license": "LGPL-3",
+    "depends": ["crm", "mail"],
+    "data": [
+        "security/ir.model.access.csv",
+        "security/crm_lead_data_rules.xml",
+        "data/crm_pipeline_stage_data.xml",
+        "data/approval_sequence.xml",
+        "data/ir_cron_data.xml",
+        "views/crm_lead_views.xml",
+        "views/crm_lead_data_approval_views.xml",
+        "wizards/lead_transfer_owner_views.xml",
+        "views/menu_views.xml",
+    ],
+    "application": True,
+    "installable": True,
+}
