@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- CUSTOM THÊM MỚI -->
+    <!-- Cron job nhắc cập nhật Hồ sơ CSKH quá hạn -->
+    <record id="ir_cron_cskh_update_reminder" model="ir.cron">
+        <field name="name">Nhắc cập nhật Hồ sơ CSKH</field>
+        <field name="model_id" ref="model_crm_cskh_profile"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_crm_update_reminder()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active">True</field>
+    </record>
+
+    <!-- CUSTOM THÊM MỚI -->
+    <!-- Cron job đồng bộ email Gmail/Incoming Mail Server vào Hồ sơ CSKH -->
+    <record id="ir_cron_cskh_gmail_sync" model="ir.cron">
+        <field name="name">Đồng bộ Gmail vào Hồ sơ CSKH</field>
+        <field name="model_id" ref="model_crm_cskh_profile"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_sync_gmail_messages()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="active">True</field>
+    </record>
+
+    <!-- CUSTOM THÊM MỚI -->
+    <!-- Cron job nhắc Sales cập nhật CRM trong vòng 24 giờ sau interaction -->
+    <record id="ir_cron_cskh_24h_update_reminder" model="ir.cron">
+        <field name="name">Nhắc cập nhật CRM trong 24 giờ</field>
+        <field name="model_id" ref="model_crm_cskh_profile"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_crm_24h_update_reminder()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="active">True</field>
+    </record>
+
+</odoo>

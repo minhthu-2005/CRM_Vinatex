@@ -1,0 +1,42 @@
+# Translation overrides for Ho_So_CSKH.
+msgid ""
+msgstr ""
+"Project-Id-Version: Ho_So_CSKH\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-27 00:00+0000\n"
+"PO-Revision-Date: 2026-05-27 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: mail
+msgid "Send message"
+msgstr "Gửi tin nhắn"
+
+#. module: mail
+msgid "Log note"
+msgstr "Ghi chú"
+
+#. module: mail
+msgid "Activity"
+msgstr "Hoạt động"
+
+#. module: mail
+msgid "Creating a new record..."
+msgstr "Đang tạo bản ghi mới..."
+
+#. module: mail
+msgid "Today"
+msgstr "Hôm nay"
+
+#. module: web
+msgid "New"
+msgstr "Mới"
+
+#. module: web
+msgid "Search"
+msgstr "Tìm kiếm"
