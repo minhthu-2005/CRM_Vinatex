@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="template_loyalty_appreciation_vn" model="mail.template">
+        <field name="name">Email tri ân khách hàng thân thiết Vinatex Đà Nẵng</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="subject">Vinatex Đà Nẵng - Chính sách tri ân dành riêng cho {{ object.name }}</field>
+        <field name="email_from">{{ user.email_formatted }}</field>
+        <field name="email_to">{{ object.email }}</field>
+        <field name="is_campaign_template">True</field>
+        <field name="campaign_template_type">loyalty</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Xin chào <t t-out="object.name or ''"/>,</p>
+                <p>
+                    Công ty Cổ phần Vinatex Đà Nẵng trân trọng cảm ơn Quý khách đã đồng hành
+                    trong các đơn hàng may mặc và gia công sản xuất vừa qua.
+                </p>
+                <p>
+                    Hiện Quý khách đang thuộc hạng
+                    <strong><t t-out="object.loyalty_tier or 'standard'"/></strong>
+                    với điểm loyalty <strong><t t-out="object.loyalty_score or 0"/></strong>.
+                </p>
+                <p>
+                    Chính sách chăm sóc phù hợp:
+                    <strong><t t-out="object.preferred_offer or 'discount'"/></strong>.
+                </p>
+                <p>
+                    Với khách hàng loại A, Vinatex Đà Nẵng có thể xem xét ưu tiên lịch sản xuất,
+                    hỗ trợ kế hoạch nguyên phụ liệu và chính sách công nợ phù hợp. Với khách hàng
+                    loại B, chúng tôi tập trung nâng cao tiến độ gia công, chất lượng thành phẩm
+                    và phản hồi nhanh trong quá trình sản xuất.
+                </p>
+                <p><t t-out="object.personalization_note or ''"/></p>
+                <p>Trân trọng,<br/>Đội ngũ Kinh doanh và Chăm sóc khách hàng Vinatex Đà Nẵng</p>
+            </div>
+        </field>
+    </record>
+</odoo>
